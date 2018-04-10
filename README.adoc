@@ -1,3 +1,3 @@
 == Create effective tests or create excuses -- testing the Java EE way
 
-Code examples of my Oracle Code presentation.
+Code examples of my effective enterprise testing presentation.
