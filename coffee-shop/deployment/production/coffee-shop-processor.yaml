@@ -1,10 +1,10 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: coffee-shop
+  name: coffee-processor
 spec:
   selector:
-    app: coffee-shop
+    app: coffee-processor
   ports:
     - port: 8080
   type: NodePort
@@ -12,21 +12,21 @@ spec:
 kind: Deployment
 apiVersion: apps/v1beta1
 metadata:
-  name: coffee-shop
+  name: coffee-processor
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: coffee-shop
+        app: coffee-processor
     spec:
       containers:
-      - name: coffee-shop
-        image: docker.sebastian-daschner.com/coffee-shop:1
-        imagePullPolicy: Always
+      - name: coffee-processor
+        image: docker.sebastian-daschner.com/coffee-processor:1
+        imagePullPolicy: IfNotPresent
         readinessProbe:
           httpGet:
-            path: /coffee-shop/resources/
+            path: /coffee-processor/resources/health-check
             port: 8080
       imagePullSecrets:
       - name: regsecret
@@ -35,14 +35,14 @@ spec:
 kind: Ingress
 apiVersion: extensions/v1beta1
 metadata:
-  name: coffee-shop
+  name: coffee-processor
 spec:
   rules:
-    - host: coffee-shop.kubernetes.local
+    - host: coffee-processor.kubernetes.local
       http:
         paths:
         - path: /
           backend:
-            serviceName: coffee-shop
+            serviceName: coffee-processor
             servicePort: 8080
 ---
