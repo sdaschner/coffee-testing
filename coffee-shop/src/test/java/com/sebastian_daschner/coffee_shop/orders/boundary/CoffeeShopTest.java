@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+import static com.sebastian_daschner.coffee_shop.orders.entity.OrderAssert.assertThat;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -40,6 +41,8 @@ class CoffeeShopTest {
         verify(testObject.orderProcessor, times(desiredOrders.size())).processOrder(orderCaptor.capture());
 
         assertThat(orderCaptor.getAllValues()).containsExactlyElementsOf(desiredOrders);
+
+        orderCaptor.getAllValues().forEach(o -> assertThat(o).isPreparing());
     }
 
 }
