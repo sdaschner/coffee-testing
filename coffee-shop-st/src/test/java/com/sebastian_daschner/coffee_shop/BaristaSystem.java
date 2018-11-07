@@ -10,13 +10,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.locks.LockSupport;
 
-public class ProcessorSystem {
+public class BaristaSystem {
 
-    public ProcessorSystem() {
-        WireMock.configureFor("coffee-processor.test.kubernetes.local", 80);
+    public BaristaSystem() {
+        WireMock.configureFor("barista.test.kubernetes.local", 80);
         reset();
 
-        WireMock.stubFor(WireMock.post("/coffee-processor/resources/processes")
+        WireMock.stubFor(WireMock.post("/barista/resources/processes")
                 .willReturn(responseJson("PREPARING")));
     }
 
@@ -26,7 +26,7 @@ public class ProcessorSystem {
 
     public void answerForOrder(URI orderUri, String status) {
         String orderId = extractId(orderUri);
-        WireMock.stubFor(WireMock.post("/coffee-processor/resources/processes")
+        WireMock.stubFor(WireMock.post("/barista/resources/processes")
                 .withRequestBody(requestJson(orderId))
                 .willReturn(responseJson(status)));
     }
@@ -56,7 +56,7 @@ public class ProcessorSystem {
     }
 
     private boolean requestMatched(String status, String orderId) {
-        List<LoggedRequest> requests = WireMock.findAll(WireMock.postRequestedFor(WireMock.urlEqualTo("/coffee-processor/resources/processes"))
+        List<LoggedRequest> requests = WireMock.findAll(WireMock.postRequestedFor(WireMock.urlEqualTo("/barista/resources/processes"))
                 .withRequestBody(requestJson(orderId, status)));
         return !requests.isEmpty();
     }

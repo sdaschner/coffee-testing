@@ -6,9 +6,10 @@ spec:
   selector:
     app: coffee-shop
   ports:
-    - port: 8080
+    - port: 9080
   type: NodePort
 ---
+
 kind: Deployment
 apiVersion: apps/v1beta1
 metadata:
@@ -22,16 +23,15 @@ spec:
     spec:
       containers:
       - name: coffee-shop
-        image: docker.sebastian-daschner.com/coffee-shop:1
+        image: sdaschner/coffee-shop:nljug-workshop-1
         imagePullPolicy: Always
         readinessProbe:
           httpGet:
             path: /coffee-shop/resources/
-            port: 8080
-      imagePullSecrets:
-      - name: regsecret
+            port: 9080
       restartPolicy: Always
 ---
+
 kind: Ingress
 apiVersion: extensions/v1beta1
 metadata:
@@ -44,5 +44,5 @@ spec:
         - path: /
           backend:
             serviceName: coffee-shop
-            servicePort: 8080
+            servicePort: 9080
 ---

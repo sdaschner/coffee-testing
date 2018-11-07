@@ -7,6 +7,7 @@ import com.sebastian_daschner.coffee_shop.orders.entity.ValidOrder;
 import javax.inject.Inject;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -30,6 +31,9 @@ public class OrdersResource {
 
     @Context
     UriInfo uriInfo;
+
+    @Context
+    HttpServletRequest request;
 
     @GET
     public JsonArray getOrders() {
@@ -66,6 +70,8 @@ public class OrdersResource {
 
     private URI buildUri(Order order) {
         return uriInfo.getBaseUriBuilder()
+                .host(request.getServerName())
+                .port(request.getServerPort())
                 .path(OrdersResource.class)
                 .path(OrdersResource.class, "getOrder")
                 .build(order.getId());

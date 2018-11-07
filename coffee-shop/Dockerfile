@@ -1,3 +1,5 @@
-FROM docker.sebastian-daschner.com/wildfly:7
+FROM sdaschner/open-liberty:javaee8-postgres-jdk11-b1
 
-COPY target/coffee-shop.war /opt/wildfly/standalone/deployments/
+COPY deployment/liberty/server.xml $CONFIG_DIR
+
+COPY target/coffee-shop.war $DEPLOYMENT_DIR

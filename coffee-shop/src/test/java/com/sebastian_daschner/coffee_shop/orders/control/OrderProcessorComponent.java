@@ -1,36 +1,34 @@
 package com.sebastian_daschner.coffee_shop.orders.control;
 
 import com.sebastian_daschner.coffee_shop.orders.entity.Order;
+import com.sebastian_daschner.coffee_shop.orders.entity.OrderStatus;
+import org.assertj.core.api.Assertions;
+import org.mockito.ArgumentCaptor;
+import org.mockito.ArgumentMatcher;
+import org.mockito.Mockito;
 
-import javax.json.Json;
-import javax.json.JsonObject;
 import javax.persistence.EntityManager;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Response;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 public class OrderProcessorComponent extends OrderProcessor {
 
-    public OrderProcessorComponent() {
-        target = mock(WebTarget.class);
-        entityManager = mock(EntityManager.class);
+    private final ArgumentCaptor<Order> orderCaptor;
 
-        Invocation.Builder mockBuilder = mock(Invocation.Builder.class);
-        when(target.request()).thenReturn(mockBuilder);
-        Invocation mockInvocation = mock(Invocation.class);
-        when(mockBuilder.buildPost(any())).thenReturn(mockInvocation);
-        Response mockResponse = mock(Response.class);
-        when(mockResponse.getStatusInfo()).thenReturn(Response.Status.OK);
-        when(mockResponse.readEntity(JsonObject.class)).thenReturn(Json.createObjectBuilder().add("status", "PREPARING").build());
-        when(mockInvocation.invoke()).thenReturn(mockResponse);
+    public OrderProcessorComponent() {
+        entityManager = mock(EntityManager.class);
+        barista = mock(Barista.class);
+        orderCaptor = ArgumentCaptor.forClass(Order.class);
+
+        when(barista.retrieveOrderStatus(orderCaptor.capture())).thenReturn(OrderStatus.PREPARING);
     }
 
     public void verifyProcessOrders(List<Order> orders) {
-        verify(target, times(orders.size())).request();
+        verify(barista, times(orders.size())).retrieveOrderStatus(any());
+        assertThat(orderCaptor.getAllValues()).containsExactlyElementsOf(orders);
     }
 
 }

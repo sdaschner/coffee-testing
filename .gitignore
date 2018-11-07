@@ -10,3 +10,4 @@ release.properties
 
 it/
 *.log
+*.jar

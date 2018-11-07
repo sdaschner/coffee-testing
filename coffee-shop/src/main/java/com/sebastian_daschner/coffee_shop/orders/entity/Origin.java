@@ -37,4 +37,11 @@ public class Origin {
         return coffeeTypes;
     }
 
+    @Override
+    public String toString() {
+        return "Origin{" +
+                "name='" + name + '\'' +
+                ", coffeeTypes=" + coffeeTypes +
+                '}';
+    }
 }

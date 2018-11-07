@@ -1,45 +1,48 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: coffee-processor
+  name: barista
   namespace: systemtest
 spec:
   selector:
-    app: coffee-processor
+    app: barista
   ports:
-    - port: 8080
+    - port: 9080
+      targetPort: 8080
   type: NodePort
 ---
+
 kind: Deployment
 apiVersion: apps/v1beta1
 metadata:
-  name: coffee-processor
+  name: barista
   namespace: systemtest
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: coffee-processor
+        app: barista
     spec:
       containers:
-      - name: coffee-processor
+      - name: barista
         image: rodolpheche/wiremock:2.6.0
         imagePullPolicy: IfNotPresent
       restartPolicy: Always
 ---
+
 kind: Ingress
 apiVersion: extensions/v1beta1
 metadata:
-  name: coffee-processor
+  name: barista
   namespace: systemtest
 spec:
   rules:
-    - host: coffee-processor.test.kubernetes.local
+    - host: barista.test.kubernetes.local
       http:
         paths:
         - path: /
           backend:
-            serviceName: coffee-processor
-            servicePort: 8080
+            serviceName: barista
+            servicePort: 9080
 ---

@@ -12,12 +12,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CoffeeOrderSystemTest {
 
     private CoffeeOrderSystem coffeeOrderSystem;
-    private ProcessorSystem processorSystem;
+    private BaristaSystem baristaSystem;
 
     @BeforeEach
     void setUp() {
         coffeeOrderSystem = new CoffeeOrderSystem();
-        processorSystem = new ProcessorSystem();
+        baristaSystem = new BaristaSystem();
     }
 
     @Test
@@ -38,7 +38,7 @@ class CoffeeOrderSystemTest {
         Order order = new Order("Espresso", "Colombia");
         URI orderUri = coffeeOrderSystem.createOrder(order);
 
-        processorSystem.answerForOrder(orderUri, "PREPARING");
+        baristaSystem.answerForOrder(orderUri, "PREPARING");
 
         Order loadedOrder = coffeeOrderSystem.getOrder(orderUri);
         assertThat(loadedOrder).isEqualToComparingOnlyGivenFields(order, "type", "origin");
@@ -46,20 +46,20 @@ class CoffeeOrderSystemTest {
         loadedOrder = waitForProcessAndGet(orderUri, "PREPARING");
         assertThat(loadedOrder.getStatus()).isEqualTo("Preparing");
 
-        processorSystem.answerForOrder(orderUri, "FINISHED");
+        baristaSystem.answerForOrder(orderUri, "FINISHED");
 
         loadedOrder = waitForProcessAndGet(orderUri, "FINISHED");
         assertThat(loadedOrder.getStatus()).isEqualTo("Finished");
     }
 
     private Order waitForProcessAndGet(URI orderUri, String requestedStatus) {
-        processorSystem.waitForInvocation(orderUri, requestedStatus);
+        baristaSystem.waitForInvocation(orderUri, requestedStatus);
         return coffeeOrderSystem.getOrder(orderUri);
     }
 
     @AfterEach
     void reset() {
-        processorSystem.reset();
+        baristaSystem.reset();
     }
 
 }

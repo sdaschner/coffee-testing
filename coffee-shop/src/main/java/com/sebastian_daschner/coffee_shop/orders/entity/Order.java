@@ -10,7 +10,8 @@ import static com.sebastian_daschner.coffee_shop.orders.entity.Order.FIND_UNFINI
 @Entity
 @Table(name = "orders")
 @NamedQueries({
-        @NamedQuery(name = FIND_UNFINISHED, query = "select o from Order o where o.status <> 'COLLECTED'"),
+        @NamedQuery(name = FIND_UNFINISHED, query = "select o from Order o where o.status <> " +
+                "com.sebastian_daschner.coffee_shop.orders.entity.OrderStatus.COLLECTED"),
         @NamedQuery(name = FIND_ALL, query = "select o from Order o")})
 public class Order {
 

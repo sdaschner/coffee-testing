@@ -1,11 +1,10 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: coffee-shop
-  namespace: systemtest
+  name: barista
 spec:
   selector:
-    app: coffee-shop
+    app: barista
   ports:
     - port: 9080
   type: NodePort
@@ -14,22 +13,21 @@ spec:
 kind: Deployment
 apiVersion: apps/v1beta1
 metadata:
-  name: coffee-shop
-  namespace: systemtest
+  name: barista
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: coffee-shop
+        app: barista
     spec:
       containers:
-      - name: coffee-shop
-        image: sdaschner/coffee-shop:nljug-workshop-1
+      - name: barista
+        image: sdaschner/barista:nljug-workshop-1
         imagePullPolicy: Always
         readinessProbe:
           httpGet:
-            path: /coffee-shop/resources/
+            path: /barista/resources/health
             port: 9080
       restartPolicy: Always
 ---
@@ -37,15 +35,14 @@ spec:
 kind: Ingress
 apiVersion: extensions/v1beta1
 metadata:
-  name: coffee-shop
-  namespace: systemtest
+  name: barista
 spec:
   rules:
-    - host: coffee-shop.test.kubernetes.local
+    - host: barista.kubernetes.local
       http:
         paths:
         - path: /
           backend:
-            serviceName: coffee-shop
+            serviceName: barista
             servicePort: 9080
 ---
