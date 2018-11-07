@@ -1,3 +1,33 @@
-== Create effective tests or create excuses -- testing the Java EE way
+= Effective Testing &amp; Test Automation For Developers
 
-Code examples of my effective enterprise testing presentation.
+Code examples of the J-Fall Pre-conference testing workshop.
+
+== Prerequisites
+
+- JDK 11+
+- Maven 3
+- Docker
+- Kubernetes (Minikube, or others)
+
+== Running the tests
+
+You run the non-integration tests by executing `mvn clean test`, or `mvn clean package` (any goal that executes Maven's `test` phase).
+
+You run the integration tests by executing `mvn test-compile failsafe:integration-test failsafe:verify`.
+
+You can run the systems tests either in a Kubernetes environment or using plain Docker containers.
+
+=== System tests on Kubernetes
+In order to run the system tests in Kubernetes you need to apply the `coffee-shop/deployment/systemtest` Kubernetes resources: `kubectl apply -f coffee-shop/deployment/systemtest/`
+
+You need to point the following DNS entries to the Kubernetes Cluster (e.g. Minikube):
+- `coffee-shop.kubernetes.local`
+- `barista.kubernetes.local`
+- `coffee-shop.test.kubernetes.local`
+- `barista.test.kubernetes.local`
+
+On a Linux environment you do this via editing the `/etc/hosts` file.
+Alternatively, you can also change the host names to the ones matching your Kubernetes ingresses in the `BaristaSystem` and `CoffeeOrderSystem` system test classes.
+
+=== System tests on local Docker containers
+In order to run the Docker containers locally, you need to create a Docker network first: `docker network create --subnet=192.168.42.0/24 dkrnet`
