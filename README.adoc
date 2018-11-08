@@ -22,10 +22,12 @@ In order to run the system tests in Kubernetes you need to apply the `coffee-sho
 
 You need to point the following DNS entries to the Kubernetes Cluster (e.g. Minikube):
 
-- `coffee-shop.kubernetes.local`
-- `barista.kubernetes.local`
-- `coffee-shop.test.kubernetes.local`
-- `barista.test.kubernetes.local`
+----
+coffee-shop.kubernetes.local
+barista.kubernetes.local
+coffee-shop.test.kubernetes.local
+barista.test.kubernetes.local
+----
 
 On a Linux environment you do this via editing the `/etc/hosts` file.
 Alternatively, you can also change the host names to the ones matching your Kubernetes ingresses in the `BaristaSystem` and `CoffeeOrderSystem` system test classes.
