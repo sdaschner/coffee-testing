@@ -21,6 +21,7 @@ You can run the systems tests either in a Kubernetes environment or using plain 
 In order to run the system tests in Kubernetes you need to apply the `coffee-shop/deployment/systemtest` Kubernetes resources: `kubectl apply -f coffee-shop/deployment/systemtest/`
 
 You need to point the following DNS entries to the Kubernetes Cluster (e.g. Minikube):
+
 - `coffee-shop.kubernetes.local`
 - `barista.kubernetes.local`
 - `coffee-shop.test.kubernetes.local`
