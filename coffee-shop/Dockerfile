@@ -1,4 +1,4 @@
-FROM sdaschner/open-liberty:javaee8-postgres-jdk11-b1
+FROM sdaschner/open-liberty:javaee8-postgres-jdk11-b3
 
 COPY deployment/liberty/server.xml $CONFIG_DIR
 

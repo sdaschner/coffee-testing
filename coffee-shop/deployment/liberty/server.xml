@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<server description="OpenLiberty Java EE 8 Server">
-
-    <featureManager>
-        <feature>javaee-8.0</feature>
-    </featureManager>
-
-    <httpEndpoint id="defaultHttpEndpoint" host="*" httpPort="9080" httpsPort="9443"/>
-    <keyStore id="defaultKeyStore" password="Liberty"/>
+<server description="Coffee shop">
 
     <!-- Postgres coffee-shop-db definition -->
     <dataSource id="DefaultDataSource" jdbcDriverRef="postgresql-driver"
@@ -16,13 +9,5 @@
                     databaseName="postgres" user="postgres" password="postgres"/>
 
     </dataSource>
-
-    <jdbcDriver id="postgresql-driver" javax.sql.XADataSource="org.postgresql.xa.PGXADataSource"
-                javax.sql.ConnectionPoolDataSource="org.postgresql.ds.PGConnectionPoolDataSource"
-                libraryRef="postgresql-library"/>
-
-    <library id="postgresql-library">
-        <fileset id="PostgreSQLFileset" dir="/opt/wlp/lib" includes="postgresql-9.4.1212.jar"/>
-    </library>
 
 </server>
