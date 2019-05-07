@@ -14,7 +14,7 @@ docker run -d --rm \
   --name coffee-shop \
   --network dkrnet \
   -p 8001:9080 \
-  sdaschner/coffee-shop:nljug-workshop-1
+  sdaschner/coffee-shop:testing-1
 
 docker run -d --rm \
   --name barista \

@@ -14,11 +14,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class OrderProcessorComponent extends OrderProcessor {
+public class OrderProcessorTestDouble extends OrderProcessor {
 
     private final ArgumentCaptor<Order> orderCaptor;
 
-    public OrderProcessorComponent() {
+    public OrderProcessorTestDouble() {
         entityManager = mock(EntityManager.class);
         barista = mock(Barista.class);
         orderCaptor = ArgumentCaptor.forClass(Order.class);

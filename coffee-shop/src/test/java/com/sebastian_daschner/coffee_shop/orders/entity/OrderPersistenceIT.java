@@ -1,6 +1,7 @@
 package com.sebastian_daschner.coffee_shop.orders.entity;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import javax.persistence.EntityManager;
@@ -9,7 +10,8 @@ import javax.persistence.Persistence;
 import java.util.UUID;
 import java.util.concurrent.locks.LockSupport;
 
-class OrderIT {
+@Disabled
+class OrderPersistenceIT {
 
     private EntityManager entityManager;
     private EntityTransaction transaction;

@@ -1,4 +1,4 @@
-package com.sebastian_daschner.coffee_shop.orders.boundary;
+package com.sebastian_daschner.coffee_shop.orders;
 
 import com.sebastian_daschner.coffee_shop.orders.entity.CoffeeType;
 import com.sebastian_daschner.coffee_shop.orders.entity.Order;
@@ -7,9 +7,9 @@ import com.sebastian_daschner.coffee_shop.orders.entity.Origin;
 import java.util.List;
 import java.util.UUID;
 
-public final class TestUtils {
+public final class TestData {
 
-    private TestUtils() {
+    private TestData() {
     }
 
     public static List<Order> unfinishedOrders() {

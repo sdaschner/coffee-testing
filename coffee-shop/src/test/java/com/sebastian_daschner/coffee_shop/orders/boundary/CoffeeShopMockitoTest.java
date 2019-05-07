@@ -1,5 +1,6 @@
 package com.sebastian_daschner.coffee_shop.orders.boundary;
 
+import com.sebastian_daschner.coffee_shop.orders.TestData;
 import com.sebastian_daschner.coffee_shop.orders.control.OrderProcessor;
 import com.sebastian_daschner.coffee_shop.orders.entity.Order;
 import org.junit.jupiter.api.Test;
@@ -35,9 +36,9 @@ class CoffeeShopMockitoTest {
     }
 
     @Test
-    void test(@Mock TypedQuery mockQuery) {
+    void test(@Mock TypedQuery<Order> mockQuery) {
         when(entityManager.createNamedQuery(Order.FIND_UNFINISHED, Order.class)).thenReturn(mockQuery);
-        List<Order> desiredOrders = TestUtils.unfinishedOrders();
+        List<Order> desiredOrders = TestData.unfinishedOrders();
         when(mockQuery.getResultList()).thenReturn(desiredOrders);
 
         testObject.processUnfinishedOrders();

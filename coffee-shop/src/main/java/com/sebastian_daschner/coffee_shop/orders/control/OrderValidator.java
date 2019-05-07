@@ -23,6 +23,9 @@ public class OrderValidator implements ConstraintValidator<ValidOrder, JsonObjec
         final String type = json.getString("type", null);
         final String origin = json.getString("origin", null);
 
+        if (type == null || origin == null)
+            return false;
+
         final CoffeeType coffeeType = coffeeShop.getCoffeeTypes().stream()
                 .filter(t -> t.name().equalsIgnoreCase(type))
                 .findAny().orElse(null);

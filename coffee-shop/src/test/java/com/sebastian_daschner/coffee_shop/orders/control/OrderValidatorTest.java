@@ -11,7 +11,10 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.validation.ConstraintValidatorContext;
 import java.io.StringReader;
-import java.util.*;
+import java.util.Collection;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -29,7 +32,7 @@ class OrderValidatorTest {
         context = mock(ConstraintValidatorContext.class);
 
         Set<CoffeeType> coffeeTypes = EnumSet.allOf(CoffeeType.class);
-        Origin colombia= new Origin("Colombia");
+        Origin colombia = new Origin("Colombia");
         colombia.getCoffeeTypes().addAll(coffeeTypes);
 
         when(testObject.coffeeShop.getCoffeeTypes()).thenReturn(coffeeTypes);
@@ -37,18 +40,37 @@ class OrderValidatorTest {
     }
 
     @ParameterizedTest
-    @MethodSource("testData")
+    @MethodSource("validData")
     void testIsValid(String json) {
         JsonObject jsonObject = Json.createReader(new StringReader(json)).readObject();
 
         assertThat(testObject.isValid(jsonObject, context)).isTrue();
     }
 
-    private static Collection<String> testData() {
+    private static Collection<String> validData() {
         return List.of(
                 "{\"type\":\"ESPRESSO\",\"origin\":\"Colombia\"}",
+                "{\"type\":\"Espresso\",\"origin\":\"Colombia\"}",
                 "{\"type\":\"LATTE\",\"origin\":\"Colombia\"}",
-                "{\"type\":\"POUR_OVER\",\"origin\":\"Colombia\"}");
+                "{\"type\":\"Latte\",\"origin\":\"Colombia\"}",
+                "{\"type\":\"POUR_OVER\",\"origin\":\"Colombia\"}",
+                "{\"type\":\"Pour_over\",\"origin\":\"Colombia\"}");
+    }
+
+    @ParameterizedTest
+    @MethodSource("invalidData")
+    void testIsInvalid(String json) {
+        JsonObject jsonObject = Json.createReader(new StringReader(json)).readObject();
+
+        assertThat(testObject.isValid(jsonObject, context)).isFalse();
+    }
+
+    private static Collection<String> invalidData() {
+        return List.of(
+                "{\"type\":\"SIPHON\",\"origin\":\"Colombia\"}",
+                "{\"type\":null,\"origin\":\"Colombia\"}",
+                "{\"origin\":\"Colombia\"}",
+                "{\"type\":\"ESPRESSO\",\"origin\":\"Ethiopia\"}");
     }
 
 }

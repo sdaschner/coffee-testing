@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: barista
-        image: sdaschner/barista:nljug-workshop-1
+        image: sdaschner/barista:testing-1
         imagePullPolicy: Always
         readinessProbe:
           httpGet:

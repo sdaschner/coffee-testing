@@ -1,4 +1,4 @@
-package com.sebastian_daschner.coffee_shop;
+package com.sebastian_daschner.coffee_shop.entity;
 
 public class Order {
 

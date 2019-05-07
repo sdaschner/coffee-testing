@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
       - name: coffee-shop
-        image: sdaschner/coffee-shop:nljug-workshop-1
+        image: sdaschner/coffee-shop:testing-1
         imagePullPolicy: Always
         readinessProbe:
           httpGet:

@@ -1,6 +1,6 @@
 package com.sebastian_daschner.coffee_shop.orders.boundary;
 
-import com.sebastian_daschner.coffee_shop.orders.control.OrderProcessorComponent;
+import com.sebastian_daschner.coffee_shop.orders.control.OrderProcessorTestDouble;
 import com.sebastian_daschner.coffee_shop.orders.entity.CoffeeType;
 import com.sebastian_daschner.coffee_shop.orders.entity.Order;
 import com.sebastian_daschner.coffee_shop.orders.entity.Origin;
@@ -11,15 +11,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-class CoffeeShopComponentTest {
+class CoffeeShopUseCaseTest {
 
-    private CoffeeShopComponent coffeeShop;
-    private OrderProcessorComponent orderProcessor;
+    private CoffeeShopTestDouble coffeeShop;
+    private OrderProcessorTestDouble orderProcessor;
 
     @BeforeEach
     void setUp() {
-        orderProcessor = new OrderProcessorComponent();
-        coffeeShop = new CoffeeShopComponent(orderProcessor);
+        orderProcessor = new OrderProcessorTestDouble();
+        coffeeShop = new CoffeeShopTestDouble(orderProcessor);
     }
 
     @Test

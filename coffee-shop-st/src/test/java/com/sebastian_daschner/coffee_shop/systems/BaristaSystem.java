@@ -1,7 +1,6 @@
-package com.sebastian_daschner.coffee_shop;
+package com.sebastian_daschner.coffee_shop.systems;
 
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder;
-import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.matching.ContentPattern;
 import com.github.tomakehurst.wiremock.verification.LoggedRequest;
 
@@ -10,14 +9,18 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.locks.LockSupport;
 
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
+
 public class BaristaSystem {
 
     public BaristaSystem() {
-        WireMock.configureFor("barista.test.kubernetes.local", 80);
+        String host = System.getProperty("barista.test.host", "localhost");
+        int port = Integer.parseInt(System.getProperty("barista.test.port", "8002"));
+
+        configureFor(host, port);
         reset();
 
-        WireMock.stubFor(WireMock.post("/barista/resources/processes")
-                .willReturn(responseJson("PREPARING")));
+        stubFor(post("/barista/resources/processes").willReturn(responseJson("PREPARING")));
     }
 
     private ResponseDefinitionBuilder responseJson(String status) {
@@ -26,7 +29,7 @@ public class BaristaSystem {
 
     public void answerForOrder(URI orderUri, String status) {
         String orderId = extractId(orderUri);
-        WireMock.stubFor(WireMock.post("/barista/resources/processes")
+        stubFor(post("/barista/resources/processes")
                 .withRequestBody(requestJson(orderId))
                 .willReturn(responseJson(status)));
     }
@@ -37,11 +40,11 @@ public class BaristaSystem {
     }
 
     private ContentPattern<?> requestJson(String orderId) {
-        return WireMock.equalToJson("{\"order\":\"" + orderId + "\"}", true, true);
+        return equalToJson("{\"order\":\"" + orderId + "\"}", true, true);
     }
 
     private ContentPattern<?> requestJson(String orderId, String status) {
-        return WireMock.equalToJson("{\"order\":\"" + orderId + "\",\"status\":\"" + status + "\"}", true, true);
+        return equalToJson("{\"order\":\"" + orderId + "\",\"status\":\"" + status + "\"}", true, true);
     }
 
     public void waitForInvocation(URI orderUri, String status) {
@@ -56,12 +59,13 @@ public class BaristaSystem {
     }
 
     private boolean requestMatched(String status, String orderId) {
-        List<LoggedRequest> requests = WireMock.findAll(WireMock.postRequestedFor(WireMock.urlEqualTo("/barista/resources/processes"))
+        List<LoggedRequest> requests = findAll(postRequestedFor(urlEqualTo("/barista/resources/processes"))
                 .withRequestBody(requestJson(orderId, status)));
         return !requests.isEmpty();
     }
 
     public void reset() {
-        WireMock.resetAllRequests();
+        resetAllRequests();
     }
+
 }
