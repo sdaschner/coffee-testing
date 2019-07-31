@@ -2,6 +2,7 @@ package com.sebastian_daschner.coffee_shop.orders.boundary;
 
 import com.sebastian_daschner.coffee_shop.orders.control.EntityBuilder;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -16,6 +17,7 @@ import javax.ws.rs.core.UriInfo;
 
 @Path("types")
 @Produces(MediaType.APPLICATION_JSON)
+@RequestScoped
 public class TypesResource {
 
     @Inject

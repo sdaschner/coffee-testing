@@ -8,7 +8,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.util.UUID;
-import java.util.concurrent.locks.LockSupport;
 
 @Disabled
 class OrderPersistenceIT {
@@ -27,7 +26,7 @@ class OrderPersistenceIT {
         transaction.begin();
 
         Origin colombia = new Origin("Colombia");
-        Order order= new Order(UUID.randomUUID(), CoffeeType.ESPRESSO, colombia);
+        Order order = new Order(UUID.randomUUID(), CoffeeType.ESPRESSO, colombia);
 
         entityManager.persist(colombia);
         entityManager.persist(order);

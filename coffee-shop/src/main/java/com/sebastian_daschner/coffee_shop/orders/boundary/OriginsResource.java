@@ -3,6 +3,7 @@ package com.sebastian_daschner.coffee_shop.orders.boundary;
 import com.sebastian_daschner.coffee_shop.orders.control.EntityBuilder;
 import com.sebastian_daschner.coffee_shop.orders.entity.CoffeeType;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -15,8 +16,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
-@Path("unused")
 @Produces(MediaType.APPLICATION_JSON)
+@RequestScoped
 public class OriginsResource {
 
     @Inject
