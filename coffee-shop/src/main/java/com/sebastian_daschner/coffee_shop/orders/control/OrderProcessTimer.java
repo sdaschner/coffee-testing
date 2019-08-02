@@ -14,7 +14,7 @@ public class OrderProcessTimer {
     @Inject
     CoffeeShop coffeeShop;
 
-    @Schedule(second = "*/20", minute = "*", hour = "*", persistent = false)
+    @Schedule(second = "*/2", minute = "*", hour = "*", persistent = false)
     public void processOrder() {
         coffeeShop.processUnfinishedOrders();
     }
