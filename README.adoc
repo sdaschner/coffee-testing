@@ -27,3 +27,7 @@ You can run the systems tests either in a Kubernetes environment or using plain 
 
 In order to run the Docker containers locally, you need to create a Docker network first: + 
 `docker network create --subnet=192.168.42.0/24 dkrnet`
+
+You can run the Docker containers by executing `./coffee-shop-st/run-systemtest-env.sh`.
+This will start the _coffee-shop_ application, the _barista_ mock server, as well as the _coffee-shop-db_ database.
+The system tests contained in `coffee-shop-st/` will run against that deployed environment.
