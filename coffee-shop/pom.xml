@@ -14,7 +14,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <!--JUnit, Mockito, AssertJ-->
+        <!-- JUnit, Mockito, AssertJ -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -58,7 +58,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!--Cucumber, Gherkin-->
+        <!-- Cucumber, Gherkin -->
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
@@ -72,7 +72,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!--JAX-RS client-->
+        <!-- JAX-RS client -->
         <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
             <artifactId>jersey-client</artifactId>
@@ -97,6 +97,8 @@
             <version>2.26</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- Java 9 and above -->
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
@@ -110,7 +112,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!--Embedded database-->
+        <!-- Embedded database -->
         <dependency>
             <groupId>org.apache.derby</groupId>
             <artifactId>derby</artifactId>
@@ -129,16 +131,16 @@
         <finalName>coffee-shop</finalName>
         <plugins>
             <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.2.2</version>
+            </plugin>
+            <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.1</version>
+                <version>2.22.2</version>
             </plugin>
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.22.1</version>
-            </plugin>
-            <plugin>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>3.2.2</version>
+                <version>2.22.2</version>
             </plugin>
         </plugins>
     </build>
