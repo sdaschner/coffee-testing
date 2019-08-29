@@ -1,4 +1,43 @@
-= Effective Testing &amp; Test Automation For Developers
+= Effective Testing &amp; Test Automation
+
+Some projects for my presentations on effective enterprise testing.
+
+The example projects contain a _coffee-shop_ application, which uses the _coffee-shop-db_ database, and a _barista_ application.
+
+
+== Running
+
+You run the environment, containing the _coffee-shop_, _barista_ applications and the _coffee-shop-db_ using Docker containers.
+
+In order to run the Docker containers locally, you need to create a Docker network first: + 
+`docker network create --subnet=192.168.42.0/24 dkrnet`
+
+Then you can build the _coffee-shop_ project and run the environment as follows:
+
+[source,bash]
+----
+./local-prepare.sh
+./local-run-env.sh
+----
+
+You can access the _coffee-shop_ application using HTTP:
+
+[source,bash]
+----
+curl localhost:8001/coffee-shop/resources/
+curl localhost:8001/coffee-shop/resources/orders
+----
+
+You create new coffee orders by POST-ing the JSON representation of a new order:
+
+[source,bash]
+----
+curl localhost:8001/coffee-shop/resources/orders -i \
+  -XPOST \
+  -H 'Content-Type: application/json' \
+  -d '{"type":"Espresso","origin":"Colombia"}'
+----
+
 
 == Running the tests
 
@@ -8,26 +47,39 @@ You run the integration tests by executing `mvn test-compile failsafe:integratio
 
 You can run the systems tests either in a Kubernetes environment or using plain Docker containers.
 
-//=== System tests on Kubernetes
-//In order to run the system tests in Kubernetes you need to apply the `coffee-shop/deployment/systemtest` Kubernetes resources: `kubectl apply -f coffee-shop/deployment/systemtest/`
-//
-//You need to point the following DNS entries to the Kubernetes Cluster (e.g. Minikube):
-//
-//----
-//coffee-shop.kubernetes.local
-//barista.kubernetes.local
-//coffee-shop.test.kubernetes.local
-//barista.test.kubernetes.local
-//----
-//
-//On a Linux environment you do this via editing the `/etc/hosts` file.
-//Alternatively, you can also change the host names to the ones matching your Kubernetes ingresses in the `BaristaSystem` and `CoffeeOrderSystem` system test classes.
 
 === System tests on local Docker containers
 
-In order to run the Docker containers locally, you need to create a Docker network first: + 
-`docker network create --subnet=192.168.42.0/24 dkrnet`
+You run the system test environment by executing:
 
-You can run the Docker containers by executing `./coffee-shop-st/run-systemtest-env.sh`.
-This will start the _coffee-shop_ application, the _barista_ mock server, as well as the _coffee-shop-db_ database.
-The system tests contained in `coffee-shop-st/` will run against that deployed environment.
+[source,bash]
+----
+./systemtest-run-env.sh
+----
+
+This starts up the _coffee-shop_ application, the _coffee-shop-db_ database, and a _barista_ mock server.
+
+The system tests contained in `coffee-shop-st/` will run against that deployed environment:
+
+[source,bash]
+----
+cd coffee-shop-st/
+mvn clean test
+----
+
+
+=== System tests on Kubernetes
+
+In order to run the system tests in Kubernetes you need to apply the `coffee-shop/deployment/systemtest` Kubernetes resources: `kubectl apply -f coffee-shop/deployment/systemtest/`
+
+You need to point the following DNS entries to the Kubernetes Cluster (e.g. Minikube):
+
+----
+coffee-shop.kubernetes.local
+barista.kubernetes.local
+coffee-shop.test.kubernetes.local
+barista.test.kubernetes.local
+----
+
+On a Linux environment you do this via editing the `/etc/hosts` file.
+Alternatively, you can also change the host names to the ones matching your Kubernetes ingresses in the `BaristaSystem` and `CoffeeOrderSystem` system test classes.

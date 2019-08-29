@@ -4,15 +4,11 @@ cd ${0%/*}/coffee-shop
 
 docker stop coffee-shop coffee-shop-db barista &> /dev/null || true
 
-# wipe local directory (will be populated from Docker image)
-sudo rm -Rf ./target/liberty/wlp/*
-
 # running the usual container image, with the Docker volume location
 docker run -d --rm \
   --name coffee-shop \
   --network dkrnet \
   -p 8001:9080 \
-  -v liberty_dev_vol:/opt/wlp/ \
   coffee-shop
 
 docker run -d --rm \
