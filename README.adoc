@@ -16,11 +16,11 @@ Then you can build the _coffee-shop_ project and run the environment as follows:
 
 [source,bash]
 ----
-./local-prepare.sh
+./local-build.sh
 ./local-run-env.sh
 ----
 
-You can access the _coffee-shop_ application using HTTP:
+You can access the _coffee-shop_ application using HTTP, after the applications have been started:
 
 [source,bash]
 ----
@@ -37,6 +37,8 @@ curl localhost:8001/coffee-shop/resources/orders -i \
   -H 'Content-Type: application/json' \
   -d '{"type":"Espresso","origin":"Colombia"}'
 ----
+
+INFO: To stop and clean up the containers again, run: `docker stop coffee-shop barista coffee-shop-db`
 
 
 == Running the tests
@@ -67,19 +69,21 @@ cd coffee-shop-st/
 mvn clean test
 ----
 
+INFO: To stop and clean up the system test containers again, run: `docker stop coffee-shop barista coffee-shop-db`
 
-=== System tests on Kubernetes
 
-In order to run the system tests in Kubernetes you need to apply the `coffee-shop/deployment/systemtest` Kubernetes resources: `kubectl apply -f coffee-shop/deployment/systemtest/`
-
-You need to point the following DNS entries to the Kubernetes Cluster (e.g. Minikube):
-
-----
-coffee-shop.kubernetes.local
-barista.kubernetes.local
-coffee-shop.test.kubernetes.local
-barista.test.kubernetes.local
-----
-
-On a Linux environment you do this via editing the `/etc/hosts` file.
-Alternatively, you can also change the host names to the ones matching your Kubernetes ingresses in the `BaristaSystem` and `CoffeeOrderSystem` system test classes.
+// === System tests on Kubernetes
+// 
+// In order to run the system tests in Kubernetes you need to apply the `coffee-shop/deployment/systemtest` Kubernetes resources: `kubectl apply -f coffee-shop/deployment/systemtest/`
+// 
+// You need to point the following DNS entries to the Kubernetes Cluster (e.g. Minikube):
+// 
+// ----
+// coffee-shop.kubernetes.local
+// barista.kubernetes.local
+// coffee-shop.test.kubernetes.local
+// barista.test.kubernetes.local
+// ----
+// 
+// On a Linux environment you do this via editing the `/etc/hosts` file.
+// Alternatively, you can also change the host names to the ones matching your Kubernetes ingresses in the `BaristaSystem` and `CoffeeOrderSystem` system test classes.

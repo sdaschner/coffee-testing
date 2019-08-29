@@ -54,7 +54,6 @@ public class EntityBuilder {
         return Json.createObjectBuilder()
                 .add("_links", Json.createObjectBuilder()
                         .add("types", typesUri.toString()))
-                .add("Привет", "Питер")
                 .add("_actions", Json.createObjectBuilder()
                         .add("order-coffee", Json.createObjectBuilder()
                                 .add("method", "POST")

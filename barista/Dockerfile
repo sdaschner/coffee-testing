@@ -1,3 +1,5 @@
-FROM sdaschner/open-liberty:javaee8-jdk11-b1
+FROM open-liberty:javaee8-java12
 
-COPY target/barista.war $DEPLOYMENT_DIR
+COPY src/main/liberty/config/server.xml /config/
+
+COPY target/barista.war /config/dropins
