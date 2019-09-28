@@ -8,6 +8,5 @@ release.properties
 *.iml
 .idea/
 
-it/
 *.log
 *.jar
