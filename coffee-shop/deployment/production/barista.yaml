@@ -20,6 +20,7 @@ spec:
     metadata:
       labels:
         app: barista
+        version: v1
     spec:
       containers:
       - name: barista
@@ -32,17 +33,28 @@ spec:
       restartPolicy: Always
 ---
 
-kind: Ingress
-apiVersion: extensions/v1beta1
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
 metadata:
   name: barista
 spec:
-  rules:
-    - host: barista.kubernetes.local
-      http:
-        paths:
-        - path: /
-          backend:
-            serviceName: barista
-            servicePort: 9080
+  hosts:
+  - barista
+  http:
+  - route:
+    - destination:
+        host: barista
+        subset: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: barista
+spec:
+  host: barista
+  subsets:
+  - name: v1
+    labels:
+      version: v1
 ---
