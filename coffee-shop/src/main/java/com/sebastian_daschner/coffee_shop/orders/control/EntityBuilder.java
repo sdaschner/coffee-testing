@@ -7,6 +7,7 @@ import com.sebastian_daschner.coffee_shop.orders.entity.Order;
 import com.sebastian_daschner.coffee_shop.orders.entity.Origin;
 
 import javax.json.*;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.UriInfo;
 import java.net.URI;
 import java.util.List;
@@ -14,16 +15,18 @@ import java.util.UUID;
 
 public class EntityBuilder {
 
-    public JsonArray buildOrders(List<Order> orders, UriInfo uriInfo) {
+    public JsonArray buildOrders(List<Order> orders, UriInfo uriInfo, HttpServletRequest request) {
         return orders.stream()
-                .map(o -> buildOrderTeaser(o, uriInfo))
+                .map(o -> buildOrderTeaser(o, uriInfo, request))
                 .collect(Json::createArrayBuilder, JsonArrayBuilder::add, JsonArrayBuilder::add)
                 .build();
     }
 
-    private JsonObject buildOrderTeaser(Order order, UriInfo uriInfo) {
+    private JsonObject buildOrderTeaser(Order order, UriInfo uriInfo, HttpServletRequest request) {
         return Json.createObjectBuilder()
                 .add("_self", uriInfo.getBaseUriBuilder()
+                        .host(request.getServerName())
+                        .port(request.getServerPort())
                         .path(OrdersResource.class)
                         .path(OrdersResource.class, "getOrder")
                         .build(order.getId())

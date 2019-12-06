@@ -38,7 +38,7 @@ public class OrdersResource {
     @GET
     public JsonArray getOrders() {
         List<Order> orders = coffeeShop.getOrders();
-        return entityBuilder.buildOrders(orders, uriInfo);
+        return entityBuilder.buildOrders(orders, uriInfo, request);
     }
 
     @PUT

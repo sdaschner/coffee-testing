@@ -12,7 +12,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
-class Barista {
+public class Barista {
 
     WebTarget target;
 
@@ -22,7 +22,7 @@ class Barista {
         target = client.target("http://barista:9080/barista/resources/processes");
     }
 
-    OrderStatus retrieveOrderStatus(Order order) {
+    public OrderStatus retrieveOrderStatus(Order order) {
         JsonObject requestJson = buildRequestJson(order);
 
         JsonObject responseJson = sendRequest(requestJson);
