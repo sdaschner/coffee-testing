@@ -1,15 +1,9 @@
 #!/bin/bash
 set -euo pipefail
+
 cd ${0%/*}/coffee-shop
 
 docker stop coffee-shop coffee-shop-db barista &> /dev/null || true
-
-# running the usual container image, with the Docker volume location
-docker run -d --rm \
-  --name coffee-shop \
-  --network dkrnet \
-  -p 8001:8080 \
-  coffee-shop
 
 docker run -d --rm \
   --name coffee-shop-db \
@@ -23,4 +17,20 @@ docker run -d --rm \
   --name barista \
   --network dkrnet \
   -p 8002:8080 \
-  sdaschner/barista:quarkus-testing-1
+  rodolpheche/wiremock:2.6.0
+
+
+# coffee-shop
+
+pushd src/main/docker/
+  docker build -t tmp-builder .
+popd
+
+
+docker run --rm -ti \
+  --name coffee-shop \
+  --network dkrnet \
+  -p 8001:8080 \
+  -v /home/sebastian/.m2/:/root/.m2/ \
+  -v $(pwd)/:/workspace/ \
+  tmp-builder /quarkus-dev.sh

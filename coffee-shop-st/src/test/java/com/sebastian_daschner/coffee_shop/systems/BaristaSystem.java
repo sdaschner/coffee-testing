@@ -20,7 +20,8 @@ public class BaristaSystem {
         configureFor(host, port);
         reset();
 
-        stubFor(post("/barista/resources/processes").willReturn(responseJson("PREPARING")));
+        stubFor(post("/processes").willReturn(responseJson("PREPARING")));
+
     }
 
     private ResponseDefinitionBuilder responseJson(String status) {
@@ -29,7 +30,7 @@ public class BaristaSystem {
 
     public void answerForOrder(URI orderUri, String status) {
         String orderId = extractId(orderUri);
-        stubFor(post("/barista/resources/processes")
+        stubFor(post("/processes")
                 .withRequestBody(requestJson(orderId))
                 .willReturn(responseJson(status)));
     }
@@ -59,7 +60,7 @@ public class BaristaSystem {
     }
 
     private boolean requestMatched(String status, String orderId) {
-        List<LoggedRequest> requests = findAll(postRequestedFor(urlEqualTo("/barista/resources/processes"))
+        List<LoggedRequest> requests = findAll(postRequestedFor(urlEqualTo("/processes"))
                 .withRequestBody(requestJson(orderId, status)));
         return !requests.isEmpty();
     }

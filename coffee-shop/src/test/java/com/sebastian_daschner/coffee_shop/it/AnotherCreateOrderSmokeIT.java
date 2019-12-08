@@ -9,7 +9,7 @@ import java.net.URI;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @QuarkusTest
-class CreateOrderSmokeIT {
+class AnotherCreateOrderSmokeIT {
 
     private CoffeeOrderSystem coffeeOrderSystem;
 
@@ -20,7 +20,7 @@ class CreateOrderSmokeIT {
 
     @Test
     void createVerifyOrder() {
-        Order order = new Order("Espresso", "Colombia");
+        Order order = new Order("Espresso", "Ethiopia");
         URI orderUri = coffeeOrderSystem.createOrder(order);
 
         Order loadedOrder = coffeeOrderSystem.getOrder(orderUri);

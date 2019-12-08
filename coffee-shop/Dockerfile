@@ -1,5 +1,7 @@
-FROM sdaschner/open-liberty:javaee8-postgres-jdk12-b1
+FROM adoptopenjdk/openjdk13-openj9:x86_64-alpine-jre-13.0.1_9_openj9-0.17.0
+RUN apk add curl
 
-COPY deployment/liberty/server.xml $CONFIG_DIR
+COPY target/lib/* /deployments/lib/
+COPY target/*-runner.jar /deployments/app.jar
 
-COPY target/coffee-shop.war $DEPLOYMENT_DIR
+CMD ["java", "-jar", "-Dquarkus.http.host=0.0.0.0", "-Djava.util.logging.manager=org.jboss.logmanager.LogManager", "/deployments/app.jar"]

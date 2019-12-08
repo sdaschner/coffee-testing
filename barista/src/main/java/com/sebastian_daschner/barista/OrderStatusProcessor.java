@@ -1,5 +1,8 @@
 package com.sebastian_daschner.barista;
 
+import javax.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
 public class OrderStatusProcessor {
 
     public String process(final String status) {

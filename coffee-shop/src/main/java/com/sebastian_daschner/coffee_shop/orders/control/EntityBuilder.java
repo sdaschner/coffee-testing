@@ -6,6 +6,7 @@ import com.sebastian_daschner.coffee_shop.orders.entity.CoffeeType;
 import com.sebastian_daschner.coffee_shop.orders.entity.Order;
 import com.sebastian_daschner.coffee_shop.orders.entity.Origin;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.json.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.UriInfo;
@@ -13,6 +14,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
+@ApplicationScoped
 public class EntityBuilder {
 
     public JsonArray buildOrders(List<Order> orders, UriInfo uriInfo, HttpServletRequest request) {
@@ -55,6 +57,7 @@ public class EntityBuilder {
         final URI typesUri = uriInfo.getBaseUriBuilder().path(TypesResource.class).build();
         final URI ordersUri = uriInfo.getBaseUriBuilder().path(OrdersResource.class).build();
         return Json.createObjectBuilder()
+//                .add("Привет", "Мир")
                 .add("_links", Json.createObjectBuilder()
                         .add("types", typesUri.toString()))
                 .add("_actions", Json.createObjectBuilder()
