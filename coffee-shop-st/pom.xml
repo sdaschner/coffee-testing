@@ -6,8 +6,9 @@
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <dependencies>
+    <name>Coffee shop system tests</name>
 
+    <dependencies>
         <!--JUnit, Mockito-->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
