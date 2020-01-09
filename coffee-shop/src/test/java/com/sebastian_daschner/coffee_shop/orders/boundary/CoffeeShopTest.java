@@ -28,7 +28,7 @@ class CoffeeShopTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    void test() {
+    void testProcessUnfinishedOrders() {
         List<Order> desiredOrders = TestData.unfinishedOrders();
 
         TypedQuery mockQuery = mock(TypedQuery.class);

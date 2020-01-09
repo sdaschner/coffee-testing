@@ -36,7 +36,7 @@ class CoffeeShopMockitoTest {
     }
 
     @Test
-    void test(@Mock TypedQuery<Order> mockQuery) {
+    void testProcessUnfinishedOrders(@Mock TypedQuery<Order> mockQuery) {
         when(entityManager.createNamedQuery(Order.FIND_UNFINISHED, Order.class)).thenReturn(mockQuery);
         List<Order> desiredOrders = TestData.unfinishedOrders();
         when(mockQuery.getResultList()).thenReturn(desiredOrders);
