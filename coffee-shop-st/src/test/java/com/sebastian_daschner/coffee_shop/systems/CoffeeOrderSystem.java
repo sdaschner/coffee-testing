@@ -77,4 +77,8 @@ public class CoffeeOrderSystem {
                 .get(Order.class);
     }
 
+    public void close() {
+        client.close();
+    }
+
 }

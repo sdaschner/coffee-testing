@@ -2,6 +2,7 @@ package cucumber;
 
 import com.sebastian_daschner.coffee_shop.entity.Order;
 import com.sebastian_daschner.coffee_shop.systems.CoffeeOrderSystem;
+import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -39,6 +40,11 @@ public class StepDefs {
 
     private void assertOrderMatches(Order actual, Order expected) {
         assertThat(actual).isEqualToComparingOnlyGivenFields(expected, "type", "origin");
+    }
+
+    @After
+    public void close() {
+        coffeeOrderSystem.close();
     }
 
 }

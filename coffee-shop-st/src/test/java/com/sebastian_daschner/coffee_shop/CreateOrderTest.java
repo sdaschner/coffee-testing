@@ -59,6 +59,7 @@ class CreateOrderTest {
 
     @AfterEach
     void reset() {
+        coffeeOrderSystem.close();
         baristaSystem.reset();
     }
 

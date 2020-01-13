@@ -3,7 +3,14 @@ set -euo pipefail
 
 cd ${0%/*}/coffee-shop
 
-docker stop coffee-shop coffee-shop-db barista &> /dev/null || true
+trap cleanup EXIT
+
+function cleanup() {
+  docker stop coffee-shop coffee-shop-db barista &> /dev/null || true
+}
+
+
+cleanup
 
 docker run -d --rm \
   --name coffee-shop-db \

@@ -1,6 +1,6 @@
 package com.sebastian_daschner.coffee_shop.it;
 
-import io.quarkus.test.junit.QuarkusTest;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +8,6 @@ import java.net.URI;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@QuarkusTest
 class CreateOrderSmokeIT {
 
     private CoffeeOrderSystem coffeeOrderSystem;
@@ -27,6 +26,11 @@ class CreateOrderSmokeIT {
         assertThat(loadedOrder).isEqualToComparingOnlyGivenFields(order, "type", "origin");
 
         assertThat(coffeeOrderSystem.getOrders()).contains(orderUri);
+    }
+
+    @AfterEach
+    void tearDown() {
+        coffeeOrderSystem.close();
     }
 
 }
