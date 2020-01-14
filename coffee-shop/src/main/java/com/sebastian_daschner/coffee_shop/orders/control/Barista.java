@@ -2,8 +2,11 @@ package com.sebastian_daschner.coffee_shop.orders.control;
 
 import com.sebastian_daschner.coffee_shop.orders.entity.Order;
 import com.sebastian_daschner.coffee_shop.orders.entity.OrderStatus;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.ws.rs.client.Client;
@@ -12,14 +15,19 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
+@ApplicationScoped
 public class Barista {
 
     WebTarget target;
 
+    @Inject
+    @ConfigProperty(name = "barista.url")
+    String baristaUrl;
+
     @PostConstruct
-    private void initClient() {
+    void initClient() {
         final Client client = ClientBuilder.newClient();
-        target = client.target("http://barista:9080/barista/resources/processes");
+        target = client.target(baristaUrl);
     }
 
     public OrderStatus retrieveOrderStatus(Order order) {

@@ -6,8 +6,7 @@ spec:
   selector:
     app: coffee-shop
   ports:
-    - port: 9080
-  type: NodePort
+  - port: 8080
 ---
 
 kind: Deployment
@@ -24,12 +23,12 @@ spec:
     spec:
       containers:
       - name: coffee-shop
-        image: sdaschner/coffee-shop:testing-2
+        image: sdaschner/coffee-shop:quarkus-testing-1
         imagePullPolicy: Always
         readinessProbe:
           httpGet:
-            path: /coffee-shop/resources/
-            port: 9080
+            path: /
+            port: 8080
       restartPolicy: Always
 ---
 

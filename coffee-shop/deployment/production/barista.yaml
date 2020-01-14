@@ -6,8 +6,7 @@ spec:
   selector:
     app: barista
   ports:
-    - port: 9080
-  type: NodePort
+  - port: 8080
 ---
 
 kind: Deployment
@@ -24,12 +23,12 @@ spec:
     spec:
       containers:
       - name: barista
-        image: sdaschner/barista:testing-1
+        image: sdaschner/barista:quarkus-testing-1
         imagePullPolicy: Always
         readinessProbe:
           httpGet:
-            path: /barista/resources/health
-            port: 9080
+            path: /health
+            port: 8080
       restartPolicy: Always
 ---
 

@@ -30,7 +30,7 @@ public class CoffeeOrderSystem {
     private URI buildUri() {
         String host = System.getProperty("coffee-shop.test.host", "localhost");
         String port = System.getProperty("coffee-shop.test.port", "8001");
-        return UriBuilder.fromUri("http://{host}:{port}/coffee-shop/resources/orders")
+        return UriBuilder.fromUri("http://{host}:{port}/orders")
                 .build(host, port);
     }
 
@@ -75,6 +75,10 @@ public class CoffeeOrderSystem {
         return client.target(orderUri)
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .get(Order.class);
+    }
+
+    public void close() {
+        client.close();
     }
 
 }

@@ -26,21 +26,21 @@ spec:
   http:
   - match:
     - uri:
-        prefix: "/barista"
+        prefix: "/processes"
     route:
     - destination:
         host: barista
         subset: v1
         port:
-          number: 9080
+          number: 8080
   - match:
     - uri:
-        prefix: "/coffee-shop"
+        prefix: "/orders"
     route:
     - destination:
         host: coffee-shop
         subset: v1
         port:
-          number: 9080
+          number: 8080
 ---
 

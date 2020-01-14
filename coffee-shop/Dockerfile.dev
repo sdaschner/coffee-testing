@@ -1,0 +1,8 @@
+FROM maven:3.6.3-jdk-13
+
+COPY pom.xml /workspace/
+COPY src /workspace/src/
+
+WORKDIR /workspace/
+
+CMD ["mvn", "compile", "quarkus:dev", "-Dquarkus.live-reload.password=123"]

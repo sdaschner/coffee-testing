@@ -1,16 +1,10 @@
 package com.sebastian_daschner.coffee_shop;
 
 import com.sebastian_daschner.coffee_shop.entity.Order;
-import com.sebastian_daschner.coffee_shop.systems.BaristaSystem;
 import com.sebastian_daschner.coffee_shop.systems.CoffeeOrderSystem;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.net.URI;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class CreateOrderValidationTest {
 
@@ -59,6 +53,11 @@ class CreateOrderValidationTest {
     private void createOrder(String o, String colombia) {
         Order order = new Order(o, colombia);
         coffeeOrderSystem.createInvalidOrder(order);
+    }
+
+    @AfterEach
+    void close() {
+        coffeeOrderSystem.close();
     }
 
 }

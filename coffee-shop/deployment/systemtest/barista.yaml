@@ -6,8 +6,7 @@ spec:
   selector:
     app: barista
   ports:
-    - port: 9080
-      targetPort: 8080
+  - port: 8080
 ---
 
 kind: Deployment
