@@ -2,42 +2,30 @@ package com.sebastian_daschner.coffee_shop.microshed;
 
 import com.sebastian_daschner.coffee_shop.microshed.health.Health;
 import com.sebastian_daschner.coffee_shop.microshed.metrics.Metrics;
-import com.sebastian_daschner.coffee_shop.microshed.openapi.OpenApi;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.UriBuilder;
-import java.net.URI;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
-class MicroShedSmokeIT {
+class MicroShedSecondSmokeIT {
 
-    private Client client;
-    private WebTarget ordersTarget;
-    private MicroShedApplication app;
+    private CoffeeShopApplication coffeeShop;
 
     @BeforeEach
     void setUp() {
-        String host = System.getProperty("coffee-shop.test.host", "localhost");
-        String port = System.getProperty("coffee-shop.test.port", "8001");
-        URI baseUri = UriBuilder.fromUri("http://{host}:{port}/").build(host, port);
-
-        app = MicroShedApplication.withBaseUri(baseUri).build();
+        coffeeShop = new CoffeeShopApplication();
     }
 
     @Test
     void testIsSystemUp() {
-        Health health = app.health();
+        Health health = coffeeShop.health();
         assertThat(health.status).isEqualTo(Health.Status.UP);
         assertThat(health.getCheck("coffee-shop").status).isEqualTo(Health.Status.UP);
     }
 
     @Test
     void testGetMetrics() {
-        Metrics metrics = app.metrics();
+        Metrics metrics = coffeeShop.metrics();
 
         System.out.println("metrics = " + metrics.metrics.size());
 
@@ -53,9 +41,13 @@ class MicroShedSmokeIT {
     }
 
     @Test
-    void testGetOpenApi() {
-        OpenApi openApi = app.openApi();
-        System.out.println("openApi = " + openApi);
+    void testGetTypes() {
+        assertThat(coffeeShop.getTypes()).containsExactlyInAnyOrder("Espresso", "Pour_over", "Latte");
+    }
+
+    @Test
+    void testGetTypeOrigins() {
+        assertThat(coffeeShop.getOrigins("Espresso")).containsExactlyInAnyOrder("Colombia", "Ethiopia");
     }
 
 }
