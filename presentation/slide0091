@@ -1,0 +1,10 @@
+
+
+show pipeline
+
+
+coffee-shop -> UT -> deploy (locally, as st env) -> SmokeITs -> system tests (-st)
+
+then
+
+build push -> CI/CD -> deploy system test to k8s -> run smoke ITs & system tests against env

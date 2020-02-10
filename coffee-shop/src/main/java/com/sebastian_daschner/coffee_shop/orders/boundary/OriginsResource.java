@@ -2,6 +2,7 @@ package com.sebastian_daschner.coffee_shop.orders.boundary;
 
 import com.sebastian_daschner.coffee_shop.orders.control.EntityBuilder;
 import com.sebastian_daschner.coffee_shop.orders.entity.CoffeeType;
+import io.quarkus.arc.Unremovable;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -18,6 +19,7 @@ import javax.ws.rs.core.UriInfo;
 
 @Produces(MediaType.APPLICATION_JSON)
 @RequestScoped
+@Unremovable // https://github.com/quarkusio/quarkus/issues/5314
 public class OriginsResource {
 
     @Inject

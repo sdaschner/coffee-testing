@@ -4,7 +4,6 @@ cd ${0%/*}/coffee-shop
 
 docker stop coffee-shop coffee-shop-db barista &> /dev/null || true
 
-# running the usual container image, with the Docker volume location
 docker run -d --rm \
   --name coffee-shop-db \
   --network dkrnet \

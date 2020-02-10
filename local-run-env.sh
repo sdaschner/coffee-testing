@@ -4,13 +4,6 @@ cd ${0%/*}/coffee-shop
 
 docker stop coffee-shop coffee-shop-db barista &> /dev/null || true
 
-# running the usual container image, with the Docker volume location
-docker run -d --rm \
-  --name coffee-shop \
-  --network dkrnet \
-  -p 8001:8080 \
-  coffee-shop
-
 docker run -d --rm \
   --name coffee-shop-db \
   --network dkrnet \
@@ -24,3 +17,10 @@ docker run -d --rm \
   --network dkrnet \
   -p 8002:8080 \
   sdaschner/barista:quarkus-testing-1
+
+sleep 3
+docker run -d --rm \
+  --name coffee-shop \
+  --network dkrnet \
+  -p 8001:8080 \
+  coffee-shop

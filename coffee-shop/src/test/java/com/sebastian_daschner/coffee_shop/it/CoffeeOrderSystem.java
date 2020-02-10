@@ -4,65 +4,87 @@ import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CoffeeOrderSystem {
+class CoffeeOrderSystem {
 
     private final Client client;
-    private final WebTarget ordersTarget;
-    private final RequestJsonBuilder jsonBuilder;
+    private final WebTarget baseTarget;
 
-    public CoffeeOrderSystem() {
+    CoffeeOrderSystem() {
         client = ClientBuilder.newClient();
-        ordersTarget = client.target(buildUri());
-        jsonBuilder = new RequestJsonBuilder();
+        baseTarget = client.target(buildBaseUri());
     }
 
-    private URI buildUri() {
+    private URI buildBaseUri() {
         String host = System.getProperty("coffee-shop.test.host", "localhost");
         String port = System.getProperty("coffee-shop.test.port", "8001");
-        return UriBuilder.fromUri("http://{host}:{port}/orders")
-                .build(host, port);
+        return UriBuilder.fromUri("http://{host}:{port}/").build(host, port);
     }
 
-    public List<URI> getOrders() {
-        return ordersTarget.request(MediaType.APPLICATION_JSON_TYPE)
+    boolean isSystemUp() {
+        JsonObject healthJson = retrieveHealthStatus();
+
+        String status = healthJson.getString("status");
+        if (!"UP".equalsIgnoreCase(status))
+            return false;
+
+        return "UP".equalsIgnoreCase(extractStatus(healthJson, "coffee-shop"));
+    }
+
+    private JsonObject retrieveHealthStatus() {
+        return baseTarget.path("health")
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .get(JsonObject.class);
+    }
+
+    private String extractStatus(JsonObject healthJson, String name) {
+        return healthJson.getJsonArray("checks")
+                .getValuesAs(JsonObject.class)
+                .stream()
+                .filter(o -> o.getString("name").equalsIgnoreCase(name))
+                .map(o -> o.getString("status"))
+                .findAny().orElse(null);
+    }
+
+    List<String> getTypes() {
+        return baseTarget.path("types")
+                .request(MediaType.APPLICATION_JSON_TYPE)
                 .get(JsonArray.class).getValuesAs(JsonObject.class).stream()
-                .map(o -> o.getString("_self"))
-                .map(URI::create)
+                .map(o -> o.getString("type"))
                 .collect(Collectors.toList());
     }
 
-    public URI createOrder(Order order) {
-        Response response = sendRequest(order);
-        verifySuccess(response);
-        return response.getLocation();
+    List<String> getOrigins(String type) {
+        URI typeOriginsUri = retrieveTypeOriginsLink(type);
+
+        return retrieveOriginsForType(typeOriginsUri);
     }
 
-    private Response sendRequest(Order order) {
-        JsonObject requestBody = jsonBuilder.forOrder(order);
-        return ordersTarget.request().post(Entity.json(requestBody));
-    }
-
-    private void verifySuccess(Response response) {
-        if (response.getStatusInfo().getFamily() != Response.Status.Family.SUCCESSFUL)
-            throw new AssertionError("Status was not successful: " + response.getStatus());
-    }
-
-    public Order getOrder(URI orderUri) {
-        return client.target(orderUri)
+    private URI retrieveTypeOriginsLink(String type) {
+        return baseTarget.path("types")
                 .request(MediaType.APPLICATION_JSON_TYPE)
-                .get(Order.class);
+                .get(JsonArray.class).getValuesAs(JsonObject.class).stream()
+                .filter(o -> o.getString("type").equalsIgnoreCase(type))
+                .map(o -> o.getJsonObject("_links").getString("origins"))
+                .map(URI::create)
+                .findAny().orElseThrow(() -> new IllegalStateException("Could not get link to origins for " + type));
     }
 
-    public void close() {
+    private List<String> retrieveOriginsForType(URI typeOriginsUri) {
+        return client.target(typeOriginsUri)
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .get(JsonArray.class).getValuesAs(JsonObject.class).stream()
+                .map(o -> o.getString("origin"))
+                .collect(Collectors.toList());
+    }
+
+    void close() {
         client.close();
     }
 }

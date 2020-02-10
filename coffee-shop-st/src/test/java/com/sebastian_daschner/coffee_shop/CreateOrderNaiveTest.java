@@ -1,5 +1,7 @@
-package com.sebastian_daschner.coffee_shop.it;
+package com.sebastian_daschner.coffee_shop;
 
+import com.sebastian_daschner.coffee_shop.entity.Order;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +22,7 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class CreateOrderNaiveSmokeIT {
+class CreateOrderNaiveTest {
 
     private Client client;
     private WebTarget ordersTarget;
@@ -54,7 +56,7 @@ class CreateOrderNaiveSmokeIT {
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .get(Order.class);
 
-        assertThat(loadedOrder).isEqualToComparingOnlyGivenFields(order, "type", "origin");
+        Assertions.assertThat(loadedOrder).isEqualToComparingOnlyGivenFields(order, "type", "origin");
 
         List<URI> orders = ordersTarget.request(MediaType.APPLICATION_JSON_TYPE)
                 .get(JsonArray.class).getValuesAs(JsonObject.class).stream()

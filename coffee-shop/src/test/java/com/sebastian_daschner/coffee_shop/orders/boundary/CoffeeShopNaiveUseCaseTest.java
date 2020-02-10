@@ -55,6 +55,7 @@ class CoffeeShopNaiveUseCaseTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     void testProcessUnfinishedOrders() {
         List<Order> orders = Arrays.asList(new Order(UUID.randomUUID(), CoffeeType.ESPRESSO, new Origin("Colombia")),
                 new Order(UUID.randomUUID(), CoffeeType.ESPRESSO, new Origin("Ethiopia")));
