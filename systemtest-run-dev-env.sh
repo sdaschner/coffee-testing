@@ -31,6 +31,9 @@ docker run -d --rm \
 
 docker build -f Dockerfile.dev -t tmp-builder .
 
+# wait for db startup
+sleep 5
+
 docker run -d --rm \
   --name coffee-shop \
   --network dkrnet \
@@ -38,6 +41,9 @@ docker run -d --rm \
   -v /home/sebastian/.m2/:/root/.m2/ \
   tmp-builder
 
-sleep 5
+# wait for app startup
+while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:8001/health)" != "200" ]]; do
+  sleep 2;
+done
 
 mvn compile quarkus:remote-dev -Dquarkus.live-reload.url=http://localhost:8001 -Dquarkus.live-reload.password=123
