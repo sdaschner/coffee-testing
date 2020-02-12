@@ -1,5 +1,6 @@
 package com.sebastian_daschner.coffee_shop.systems;
 
+import com.sebastian_daschner.coffee_shop.TestConfig;
 import com.sebastian_daschner.coffee_shop.entity.Order;
 
 import javax.json.JsonArray;
@@ -28,8 +29,8 @@ public class CoffeeOrderSystem {
     }
 
     private URI buildUri() {
-        String host = System.getProperty("coffee-shop.test.host", "localhost");
-        String port = System.getProperty("coffee-shop.test.port", "8001");
+        String host = TestConfig.getProperty("coffee-shop.test.host");
+        String port = TestConfig.getProperty("coffee-shop.test.port");
         return UriBuilder.fromUri("http://{host}:{port}/orders")
                 .build(host, port);
     }

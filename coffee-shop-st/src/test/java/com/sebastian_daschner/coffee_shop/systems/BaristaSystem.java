@@ -3,6 +3,7 @@ package com.sebastian_daschner.coffee_shop.systems;
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder;
 import com.github.tomakehurst.wiremock.matching.ContentPattern;
 import com.github.tomakehurst.wiremock.verification.LoggedRequest;
+import com.sebastian_daschner.coffee_shop.TestConfig;
 
 import java.net.URI;
 import java.util.Collections;
@@ -14,8 +15,8 @@ import static com.github.tomakehurst.wiremock.client.WireMock.*;
 public class BaristaSystem {
 
     public BaristaSystem() {
-        String host = System.getProperty("barista.test.host", "localhost");
-        int port = Integer.parseInt(System.getProperty("barista.test.port", "8002"));
+        String host = TestConfig.getProperty("barista.test.host");
+        int port = Integer.parseInt(TestConfig.getProperty("barista.test.port"));
 
         configureFor(host, port);
         reset();
