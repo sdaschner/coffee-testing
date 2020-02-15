@@ -18,7 +18,9 @@ docker run -d --rm \
   -p 8002:8080 \
   rodolpheche/wiremock:2.6.0
 
-sleep 2
+# wait for db startup
+sleep 5
+
 docker run -d --rm \
   --name coffee-shop \
   --network dkrnet \

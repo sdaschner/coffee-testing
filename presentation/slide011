@@ -3,13 +3,12 @@
 
 
 
-        Thank you for your attention!
+        Key Takeaways
 
-        • daschner.dev/tests-flow
-        • @DaschnerS
-        • Book: Architecting Modern Java EE Applications
+        • Test code quality matters
+        • Reusable test components
+        • Fast feedback, turnaround cycles
+        • Separate life cycles
+        • Reusable, idempotent tests scenarios
+        • Test code quality > test frameworks
 
-        • quarkus.io
-        • jakarta.ee
-        • microprofile.io
-        • wiremock.org

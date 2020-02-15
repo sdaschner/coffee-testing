@@ -2,12 +2,14 @@
 
 
                                 
-                        system test  ---.
-                             |          |
-                             v          |
+                  src/    system test --.
+                     \         |        |
+                      \        |        |
+                       ┘       v        |
                 .──.    ┌───────────┐   |
                 │DB│<-->│coffee-shop│   | control/verify
-                └──┘    └───────────┘   |
+                └──┘    │  (:dev)   │   |
+                        └───────────┘   |
                               |         |
                               |         |
                               v         |

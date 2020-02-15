@@ -1,14 +1,19 @@
-
-
-
-
-
-        Key Takeaways
-
-        • Test code quality matters
-        • Reusable test components
-        • Fast feedback, turnaround cycles
-        • Separate life cycles
-        • Reusable, idempotent tests scenarios
-        • Test code quality > test frameworks
-
+   
+   
+   
+   Local development:
+   
+   ┌─────────────┐   ┌──────────────┐   ┌─────────────┐   ┌────────────────┐
+   │             │   │              │   │             │   │                │
+   │  build/UT   │-->│ deploy local │-->│  smoke ITs  │-->│  system tests  │
+   │(coffee-shop)│   │ (:dev mode)  │   │(coffee-shop)│   │(coffee-shop-st)│
+   └─────────────┘   └──────────────┘   └─────────────┘   └────────────────┘
+   
+   
+   CI/CD:
+   
+   ┌─────────────┐   ┌────────────┐   ┌──────────────┐   ┌────────────────┐
+   │             │   │            │   │              │   │                │
+   │ pull/build  │-->│   deploy   │-->│  smoke ITs   │-->│  system tests  │-->...
+   │(coffee-shop)│   │ (e.g. k8s) │   │(point to k8s)│   │ (point to k8s) │
+   └─────────────┘   └────────────┘   └──────────────┘   └────────────────┘

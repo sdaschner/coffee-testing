@@ -10,7 +10,6 @@ import javax.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class Health implements HealthCheck {
 
-
     @Override
     public HealthCheckResponse call() {
         return HealthCheckResponse.up("coffee-shop");

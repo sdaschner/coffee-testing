@@ -18,10 +18,8 @@ public class BaristaSystem {
         int port = Integer.parseInt(System.getProperty("barista.test.port", "8002"));
 
         configureFor(host, port);
-        reset();
 
         stubFor(post("/processes").willReturn(responseJson("PREPARING")));
-
     }
 
     private ResponseDefinitionBuilder responseJson(String status) {
@@ -63,10 +61,6 @@ public class BaristaSystem {
         List<LoggedRequest> requests = findAll(postRequestedFor(urlEqualTo("/processes"))
                 .withRequestBody(requestJson(orderId, status)));
         return !requests.isEmpty();
-    }
-
-    public void reset() {
-        resetAllRequests();
     }
 
 }
