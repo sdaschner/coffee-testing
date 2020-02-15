@@ -14,6 +14,6 @@
    
    ┌─────────────┐   ┌────────────┐   ┌──────────────┐   ┌────────────────┐
    │             │   │            │   │              │   │                │
-   │ pull/build  │-->│   deploy   │-->│  smoke ITs   │-->│  system tests  │-->...
+   │  build/UT   │-->│   deploy   │-->│  smoke ITs   │-->│  system tests  │-->...
    │(coffee-shop)│   │ (e.g. k8s) │   │(point to k8s)│   │ (point to k8s) │
    └─────────────┘   └────────────┘   └──────────────┘   └────────────────┘

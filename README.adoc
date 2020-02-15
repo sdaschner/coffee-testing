@@ -74,7 +74,8 @@ INFO: To stop and clean up the system test containers again, run: `docker stop c
 
 === System tests on Kubernetes
 
-In order to run the system tests in Kubernetes &amp; Istio you need to apply the `coffee-shop/deployment/systemtest` Kubernetes resources: `kubectl apply -f coffee-shop/deployment/systemtest/`. The files assume that you have Istio installed on your cluster.
+In order to run the system tests in Kubernetes &amp; Istio you need to apply the `systemtest` Kubernetes resources: `kubectl apply -f coffee-shop/deployment/systemtest/`.
+The files assume that you have Istio installed on your cluster.
 
 You can point your integration &amp; system tests to the remote environment using the following system variables:
 
