@@ -24,15 +24,15 @@ You can access the _coffee-shop_ application using HTTP, after the applications 
 
 [source,bash]
 ----
-curl localhost:8001/coffee-shop/resources/
-curl localhost:8001/coffee-shop/resources/orders
+curl localhost:8001/
+curl localhost:8001/orders
 ----
 
 You create new coffee orders by POST-ing the JSON representation of a new order:
 
 [source,bash]
 ----
-curl localhost:8001/coffee-shop/resources/orders -i \
+curl localhost:8001/orders -i \
   -XPOST \
   -H 'Content-Type: application/json' \
   -d '{"type":"Espresso","origin":"Colombia"}'
@@ -43,7 +43,7 @@ INFO: To stop and clean up the containers again, run: `docker stop coffee-shop b
 
 == Running the tests
 
-You run the non-integration tests by executing `mvn clean test`, or `mvn clean package` (any goal that executes Maven's `test` phase).
+You run the non-integration tests by executing `mvn test`, or `mvn package` (any goal that executes Maven's `test` phase).
 
 You run the integration tests by executing `mvn test-compile failsafe:integration-test failsafe:verify`.
 
@@ -66,24 +66,36 @@ The system tests contained in `coffee-shop-st/` will run against that deployed e
 [source,bash]
 ----
 cd coffee-shop-st/
-mvn clean test
+mvn verify
 ----
 
 INFO: To stop and clean up the system test containers again, run: `docker stop coffee-shop barista coffee-shop-db`
 
 
-// === System tests on Kubernetes
-// 
-// In order to run the system tests in Kubernetes you need to apply the `coffee-shop/deployment/systemtest` Kubernetes resources: `kubectl apply -f coffee-shop/deployment/systemtest/`
-// 
-// You need to point the following DNS entries to the Kubernetes Cluster (e.g. Minikube):
-// 
-// ----
-// coffee-shop.kubernetes.local
-// barista.kubernetes.local
-// coffee-shop.test.kubernetes.local
-// barista.test.kubernetes.local
-// ----
-// 
-// On a Linux environment you do this via editing the `/etc/hosts` file.
-// Alternatively, you can also change the host names to the ones matching your Kubernetes ingresses in the `BaristaSystem` and `CoffeeOrderSystem` system test classes.
+=== System tests on Kubernetes
+
+In order to run the system tests in Kubernetes &amp; Istio you need to apply the `coffee-shop/deployment/systemtest` Kubernetes resources: `kubectl apply -f coffee-shop/deployment/systemtest/`. The files assume that you have Istio installed on your cluster.
+
+You can point your integration &amp; system tests to the remote environment using the following system variables:
+
+- for the smoke integration tests:
+
+[source,bash]
+----
+cd coffee-shop/
+mvn test-compile failsafe:integration-test failsafe:verify \
+  -Dcoffee-shop.test.host=1.2.3.4 \
+  -Dcoffee-shop.test.port=80
+----
+
+- for the system tests:
+
+[source,bash]
+----
+cd coffee-shop-st/
+mvn verify \
+  -Dcoffee-shop.test.host=1.2.3.4 \
+  -Dcoffee-shop.test.port=80 \
+  -Dbarista.test.host=1.2.3.4 \
+  -Dbarista.test.port=80
+----
