@@ -73,7 +73,6 @@
             <artifactId>quarkus-smallrye-metrics</artifactId>
         </dependency>
 
-
         <!-- JUnit, Mockito, AssertJ -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>

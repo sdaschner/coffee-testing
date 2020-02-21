@@ -36,6 +36,10 @@ spec:
   - match:
     - uri:
         prefix: "/orders"
+    - uri:
+        prefix: "/types"
+    - uri:
+        prefix: "/health"
     route:
     - destination:
         host: coffee-shop
