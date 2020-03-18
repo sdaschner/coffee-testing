@@ -72,6 +72,20 @@ mvn verify
 INFO: To stop and clean up the system test containers again, run: `docker stop coffee-shop barista coffee-shop-db`
 
 
+=== System tests with Quarkus dev mode
+
+The system test environment with Docker containers also works with the Quarkus `remote-dev` mode where we can see our code changes immediately being reflected in the running `coffee-shop` application.
+
+You run the system test environment with dev mode by executing:
+
+[source,bash]
+----
+./systemtest-run-dev-env.sh
+----
+
+You can run the system tests like in the description before, and also you can change the sources under `coffee-shop/` and see the changes being reflected in the running coffee-shop application.
+
+
 === System tests on Kubernetes
 
 In order to run the system tests in Kubernetes &amp; Istio you need to apply the `systemtest` Kubernetes resources: `kubectl apply -f coffee-shop/deployment/systemtest/`.
