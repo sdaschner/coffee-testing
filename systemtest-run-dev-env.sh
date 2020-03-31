@@ -38,6 +38,7 @@ docker run -d --rm \
   --name coffee-shop \
   --network dkrnet \
   -p 8001:8080 \
+  -p 5005:5005 \
   -v /home/sebastian/.m2/:/root/.m2/ \
   tmp-builder
 
