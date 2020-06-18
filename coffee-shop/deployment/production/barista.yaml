@@ -10,11 +10,15 @@ spec:
 ---
 
 kind: Deployment
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 metadata:
   name: barista
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: barista
+      version: v1
   template:
     metadata:
       labels:

@@ -10,11 +10,14 @@ spec:
 ---
 
 kind: Deployment
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 metadata:
   name: coffee-shop-db
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: coffee-shop-db
   template:
     metadata:
       labels:
