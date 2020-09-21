@@ -6,9 +6,8 @@ spec:
   selector:
     app: coffee-shop
   ports:
-  - port: 8080
+    - port: 8080
 ---
-
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -26,30 +25,28 @@ spec:
         version: v1
     spec:
       containers:
-      - name: coffee-shop
-        image: sdaschner/coffee-shop:quarkus-testing-1
-        imagePullPolicy: Always
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 8080
+        - name: coffee-shop
+          image: docker.sebastian-daschner.com/coffee-testing:123
+          imagePullPolicy: Always
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
       restartPolicy: Always
 ---
-
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: coffee-shop
 spec:
   hosts:
-  - coffee-shop
+    - coffee-shop
   http:
-  - route:
-    - destination:
-        host: coffee-shop
-        subset: v1
+    - route:
+        - destination:
+            host: coffee-shop
+            subset: v1
 ---
-
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
@@ -57,7 +54,8 @@ metadata:
 spec:
   host: coffee-shop
   subsets:
-  - name: v1
-    labels:
-      version: v1
+    - name: v1
+      labels:
+        version: v1
 ---
+
