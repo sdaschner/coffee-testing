@@ -38,6 +38,7 @@ class CoffeeOrderSystem {
     }
 
     private JsonObject retrieveHealthStatus() {
+        System.out.println("accessing " + baseTarget.path("health").getUri().toString());
         return baseTarget.path("health")
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .get(JsonObject.class);
@@ -53,6 +54,7 @@ class CoffeeOrderSystem {
     }
 
     List<String> getTypes() {
+        System.out.println("accessing " + baseTarget.path("types").getUri().toString());
         return baseTarget.path("types")
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .get(JsonArray.class).getValuesAs(JsonObject.class).stream()
@@ -67,6 +69,7 @@ class CoffeeOrderSystem {
     }
 
     private URI retrieveTypeOriginsLink(String type) {
+        System.out.println("accessing " + baseTarget.path("types").getUri().toString());
         return baseTarget.path("types")
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .get(JsonArray.class).getValuesAs(JsonObject.class).stream()
@@ -77,6 +80,7 @@ class CoffeeOrderSystem {
     }
 
     private List<String> retrieveOriginsForType(URI typeOriginsUri) {
+        System.out.println("accessing " + typeOriginsUri.toString());
         return client.target(typeOriginsUri)
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .get(JsonArray.class).getValuesAs(JsonObject.class).stream()

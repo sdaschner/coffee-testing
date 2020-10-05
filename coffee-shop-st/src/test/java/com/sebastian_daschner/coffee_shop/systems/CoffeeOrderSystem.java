@@ -35,6 +35,7 @@ public class CoffeeOrderSystem {
     }
 
     public List<URI> getOrders() {
+        System.out.println("accessing " + ordersTarget.getUri().toString());
         return ordersTarget.request(MediaType.APPLICATION_JSON_TYPE)
                 .get(JsonArray.class).getValuesAs(JsonObject.class).stream()
                 .map(o -> o.getString("_self"))
@@ -55,6 +56,7 @@ public class CoffeeOrderSystem {
 
     private Response sendRequest(Order order) {
         JsonObject requestBody = jsonBuilder.forOrder(order);
+        System.out.println("accessing " + ordersTarget.getUri().toString());
         return ordersTarget.request().post(Entity.json(requestBody));
     }
 
@@ -72,6 +74,7 @@ public class CoffeeOrderSystem {
     }
 
     public Order getOrder(URI orderUri) {
+        System.out.println("accessing " + orderUri.toString());
         return client.target(orderUri)
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .get(Order.class);
