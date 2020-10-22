@@ -12,7 +12,10 @@ public class Health implements HealthCheck {
 
     @Override
     public HealthCheckResponse call() {
-        return HealthCheckResponse.up("coffee-shop");
+        return HealthCheckResponse.named("coffee-shop")
+                .up()
+                .withData("test", "1")
+                .build();
     }
 
 }
