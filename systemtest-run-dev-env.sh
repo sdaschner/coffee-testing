@@ -6,6 +6,7 @@ cd ${0%/*}/coffee-shop
 trap cleanup EXIT
 
 function cleanup() {
+  echo stopping containers
   docker stop coffee-shop coffee-shop-db barista &> /dev/null || true
 }
 
@@ -28,18 +29,14 @@ docker run -d --rm \
 
 
 # coffee-shop
-
+mvn clean package -Dquarkus.package.type=mutable-jar
 docker build -f Dockerfile.dev -t tmp-builder .
-
-# wait for db startup
-sleep 5
 
 docker run -d --rm \
   --name coffee-shop \
   --network dkrnet \
   -p 8001:8080 \
   -p 5005:5005 \
-  -v /home/sebastian/.m2/:/root/.m2/ \
   tmp-builder
 
 # wait for app startup
@@ -47,4 +44,4 @@ while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:8001/healt
   sleep 2;
 done
 
-mvn compile quarkus:remote-dev -Dquarkus.live-reload.url=http://localhost:8001 -Dquarkus.live-reload.password=123
+mvn quarkus:remote-dev -Ddebug=false -Dquarkus.live-reload.url=http://localhost:8001 -Dquarkus.live-reload.password=123 -Dquarkus.package.type=mutable-jar

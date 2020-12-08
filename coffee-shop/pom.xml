@@ -180,7 +180,7 @@
     </build>
 
     <properties>
-        <quarkus.version>1.5.1.Final</quarkus.version>
+        <quarkus.version>1.10.2.Final</quarkus.version>
         <maven.compiler.source>14</maven.compiler.source>
         <maven.compiler.target>14</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
