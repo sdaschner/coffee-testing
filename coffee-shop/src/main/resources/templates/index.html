@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Coffee orders</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<h1>All coffee orders</h1>
+
+<p><a href="/order.html">Create coffee order</a></p>
+
+<table>
+    <tr>
+        <th>Status</th>
+        <th>Type</th>
+        <th>Origin</th>
+    </tr>
+    {#for order in orders}
+    <tr>
+        <td>{string:capitalize(order.status.name)}</td>
+        <td>{order.type.description}</td>
+        <td>{order.origin.name}</td>
+    </tr>
+    {/for}
+</table>
+
+</body>
+</html>

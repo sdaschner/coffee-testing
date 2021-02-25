@@ -1,7 +1,7 @@
 package cucumber;
 
-import com.sebastian_daschner.coffee_shop.entity.Order;
-import com.sebastian_daschner.coffee_shop.systems.CoffeeOrderSystem;
+import com.sebastian_daschner.coffee_shop.backend.entity.Order;
+import com.sebastian_daschner.coffee_shop.backend.systems.CoffeeOrderSystem;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Then;

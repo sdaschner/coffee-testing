@@ -1,0 +1,30 @@
+body {
+    margin: 1rem auto;
+    width: 40rem;
+    font-family: 'IBM Plex Sans', Arial, sans-serif;
+}
+
+a {
+    color: #000;
+}
+
+th {
+    text-align: left
+}
+
+td, th {
+    padding-right: 0.8rem;
+    padding-bottom: 0.4rem
+}
+
+.grid {
+    display: grid;
+    grid-auto-flow: column;
+    grid-column-gap: 1rem;
+    grid-auto-columns: max-content;
+}
+
+.error {
+    color: red;
+    font-size: 0.9rem;
+}

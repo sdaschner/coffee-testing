@@ -1,4 +1,4 @@
-package com.sebastian_daschner.coffee_shop.systems;
+package com.sebastian_daschner.coffee_shop.backend.systems;
 
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder;
 import com.github.tomakehurst.wiremock.matching.ContentPattern;

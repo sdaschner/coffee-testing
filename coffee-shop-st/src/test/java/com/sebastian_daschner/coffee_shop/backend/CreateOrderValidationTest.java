@@ -1,7 +1,7 @@
-package com.sebastian_daschner.coffee_shop;
+package com.sebastian_daschner.coffee_shop.backend;
 
-import com.sebastian_daschner.coffee_shop.entity.Order;
-import com.sebastian_daschner.coffee_shop.systems.CoffeeOrderSystem;
+import com.sebastian_daschner.coffee_shop.backend.entity.Order;
+import com.sebastian_daschner.coffee_shop.backend.systems.CoffeeOrderSystem;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

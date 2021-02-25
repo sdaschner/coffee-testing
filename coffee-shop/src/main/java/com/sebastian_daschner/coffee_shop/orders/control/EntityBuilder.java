@@ -14,6 +14,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
+import static com.sebastian_daschner.coffee_shop.orders.control.StringExtensions.capitalize;
+
 @ApplicationScoped
 public class EntityBuilder {
 
@@ -101,10 +103,6 @@ public class EntityBuilder {
                                 .path(TypesResource.class)
                                 .path(TypesResource.class, "originsResource")
                                 .build(type).toString().toLowerCase()));
-    }
-
-    private String capitalize(String word) {
-        return Character.toUpperCase(word.charAt(0)) + word.substring(1).toLowerCase();
     }
 
 }

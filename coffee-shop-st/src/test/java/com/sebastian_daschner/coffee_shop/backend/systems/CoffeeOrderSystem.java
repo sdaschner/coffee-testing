@@ -1,6 +1,6 @@
-package com.sebastian_daschner.coffee_shop.systems;
+package com.sebastian_daschner.coffee_shop.backend.systems;
 
-import com.sebastian_daschner.coffee_shop.entity.Order;
+import com.sebastian_daschner.coffee_shop.backend.entity.Order;
 
 import javax.json.JsonArray;
 import javax.json.JsonObject;

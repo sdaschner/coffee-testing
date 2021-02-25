@@ -1,8 +1,9 @@
-package com.sebastian_daschner.coffee_shop;
+package com.sebastian_daschner.coffee_shop.backend;
 
-import com.sebastian_daschner.coffee_shop.entity.Order;
-import com.sebastian_daschner.coffee_shop.systems.BaristaSystem;
-import com.sebastian_daschner.coffee_shop.systems.CoffeeOrderSystem;
+import com.sebastian_daschner.coffee_shop.backend.entity.Order;
+import com.sebastian_daschner.coffee_shop.backend.systems.BaristaSystem;
+import com.sebastian_daschner.coffee_shop.backend.systems.CoffeeOrderSystem;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,9 +29,9 @@ class CreateOrderTest {
         URI orderUri = coffeeOrderSystem.createOrder(order);
 
         Order loadedOrder = coffeeOrderSystem.getOrder(orderUri);
-        assertThat(loadedOrder).isEqualToComparingOnlyGivenFields(order, "type", "origin");
+        Assertions.assertThat(loadedOrder).isEqualToComparingOnlyGivenFields(order, "type", "origin");
 
-        assertThat(coffeeOrderSystem.getOrders()).contains(orderUri);
+        Assertions.assertThat(coffeeOrderSystem.getOrders()).contains(orderUri);
     }
 
     @Test
@@ -41,15 +42,15 @@ class CreateOrderTest {
         baristaSystem.answerForOrder(orderUri, "PREPARING");
 
         Order loadedOrder = coffeeOrderSystem.getOrder(orderUri);
-        assertThat(loadedOrder).isEqualToComparingOnlyGivenFields(order, "type", "origin");
+        Assertions.assertThat(loadedOrder).isEqualToComparingOnlyGivenFields(order, "type", "origin");
 
         loadedOrder = waitForProcessAndGet(orderUri, "PREPARING");
-        assertThat(loadedOrder.getStatus()).isEqualTo("Preparing");
+        Assertions.assertThat(loadedOrder.getStatus()).isEqualTo("Preparing");
 
         baristaSystem.answerForOrder(orderUri, "FINISHED");
 
         loadedOrder = waitForProcessAndGet(orderUri, "FINISHED");
-        assertThat(loadedOrder.getStatus()).isEqualTo("Finished");
+        Assertions.assertThat(loadedOrder.getStatus()).isEqualTo("Finished");
     }
 
     private Order waitForProcessAndGet(URI orderUri, String requestedStatus) {

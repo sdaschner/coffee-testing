@@ -4,9 +4,19 @@ import java.util.stream.Stream;
 
 public enum CoffeeType {
 
-    ESPRESSO,
-    POUR_OVER,
-    LATTE;
+    ESPRESSO("Espresso"),
+    POUR_OVER("Pour over"),
+    LATTE("Latte");
+
+    private final String description;
+
+    CoffeeType(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 
     public static CoffeeType fromString(String string) {
         return Stream.of(CoffeeType.values())

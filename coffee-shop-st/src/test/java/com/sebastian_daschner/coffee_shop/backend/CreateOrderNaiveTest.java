@@ -1,6 +1,6 @@
-package com.sebastian_daschner.coffee_shop;
+package com.sebastian_daschner.coffee_shop.backend;
 
-import com.sebastian_daschner.coffee_shop.entity.Order;
+import com.sebastian_daschner.coffee_shop.backend.entity.Order;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
