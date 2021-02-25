@@ -1,36 +1,35 @@
 package com.sebastian_daschner.coffee_shop.frontend;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import com.codeborne.selenide.SelenideElement;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class IndexView extends View {
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
+import static java.util.stream.Collectors.toList;
 
-    public IndexView(WebDriver driver) {
-        super(driver);
-    }
+public class IndexView {
 
-    public String getPageHeader() {
-        return driver.findElement(By.cssSelector("body > h1")).getText();
+    public SelenideElement getPageHeader() {
+        return $("body > h1");
     }
 
     public List<Order> getListedOrders() {
-        return driver.findElements(By.cssSelector("body > table tr")).stream()
-                .map(el -> el.findElements(By.cssSelector("td")))
+        return $$("body > table tr").stream()
+                .map(el -> el.findAll("td"))
                 .filter(list -> !list.isEmpty())
                 .map(list -> new Order(list.get(0).getText(), list.get(1).getText(), list.get(2).getText()))
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     public OrderView followCreateOrderLink() {
-        String href = driver.findElements(By.tagName("a")).stream()
-                .filter(el -> el.getText().contains("Create"))
-                .findAny()
-                .orElseThrow().getAttribute("href");
-        driver.navigate().to(href);
-        return new OrderView(driver);
+        createOrderLink().click();
+        return new OrderView();
+    }
+
+    private SelenideElement createOrderLink() {
+        return $$("a").findBy(text("Create"));
     }
 
 }
