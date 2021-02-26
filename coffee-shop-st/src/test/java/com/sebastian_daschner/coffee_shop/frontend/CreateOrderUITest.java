@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static com.codeborne.selenide.Condition.text;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CreateOrderUITest {
@@ -22,7 +23,7 @@ public class CreateOrderUITest {
         int numberOrders = index.getListedOrders().size();
 
         OrderView orderView = index.followCreateOrderLink();
-        assertThat(orderView.getPageHeader()).isEqualTo("Order coffee");
+        orderView.getPageHeader().shouldHave(text("Order coffee"));
         index = orderView.orderCoffee("Espresso", "Colombia");
 
         List<Order> orders = index.getListedOrders();
@@ -38,7 +39,7 @@ public class CreateOrderUITest {
         int numberOrders = index.getListedOrders().size();
 
         OrderView orderView = index.followCreateOrderLink();
-        assertThat(orderView.getPageHeader()).isEqualTo("Order coffee");
+        orderView.getPageHeader().shouldHave(text("Order coffee"));
         index = orderView.orderCoffeeSelectWithKeyboard("Espresso", "Colombia");
 
         List<Order> orders = index.getListedOrders();

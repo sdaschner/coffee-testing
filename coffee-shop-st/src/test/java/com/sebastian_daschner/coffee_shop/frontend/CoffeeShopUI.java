@@ -1,22 +1,17 @@
 package com.sebastian_daschner.coffee_shop.frontend;
 
 import org.openqa.selenium.Cookie;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 import javax.ws.rs.core.UriBuilder;
 
+import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+
 public class CoffeeShopUI {
 
-    private final WebDriver driver;
-
-    public CoffeeShopUI() {
-        driver = new ChromeDriver();
-    }
-
     public void init() {
-        driver.get(uriBuilder().path("index.html").toString());
-        driver.manage().addCookie(new Cookie("session", "123"));
+        open(uriBuilder().path("index.html").toString());
+        getWebDriver().manage().addCookie(new Cookie("session", "123"));
     }
 
     private UriBuilder uriBuilder() {
@@ -28,8 +23,8 @@ public class CoffeeShopUI {
     }
 
     public IndexView index() {
-        driver.navigate().to(uriBuilder().path("index.html").toString());
-        return new IndexView(driver);
+        open(uriBuilder().path("index.html").toString());
+        return new IndexView();
     }
 
 }

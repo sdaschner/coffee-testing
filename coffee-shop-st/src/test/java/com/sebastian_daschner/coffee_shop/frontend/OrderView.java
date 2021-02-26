@@ -1,57 +1,45 @@
 package com.sebastian_daschner.coffee_shop.frontend;
 
-import org.openqa.selenium.By;
+import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.Select;
 
-import static org.openqa.selenium.support.ui.ExpectedConditions.attributeToBeNotEmpty;
-import static org.openqa.selenium.support.ui.ExpectedConditions.not;
+import static com.codeborne.selenide.Condition.enabled;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.actions;
 
-public class OrderView extends View {
+public class OrderView {
 
-    private final Select typeSelect;
-    private final Select originSelect;
-    private final WebElement submitButton;
+    private final SelenideElement typeSelect = $("select[name=type]");
+    private final SelenideElement originSelect = $("select[name=origin]");
+    private final SelenideElement submitButton = $("button[type=submit]");
 
-    public OrderView(WebDriver driver) {
-        super(driver);
-        typeSelect = new Select(driver.findElement(By.cssSelector("select[name=type]")));
-        originSelect = new Select(driver.findElement(By.cssSelector("select[name=origin]")));
-        submitButton = driver.findElement(By.cssSelector("button[type=submit]"));
-    }
-
-    public String getPageHeader() {
-        return driver.findElement(By.cssSelector("body > h1")).getText();
+    public SelenideElement getPageHeader() {
+        return $("body > h1");
     }
 
     public IndexView orderCoffee(String type, String origin) {
-        typeSelect.selectByVisibleText(type);
-        waitFor().until(not(attributeToBeNotEmpty(originSelect.getWrappedElement(), "disabled")));
-        originSelect.selectByVisibleText(origin);
+        typeSelect.selectOptionContainingText(type);
+        originSelect.shouldBe(enabled);
+        originSelect.selectOptionContainingText(origin);
         submitButton.click();
-
-        return new IndexView(driver);
+        return new IndexView();
     }
 
     public IndexView orderCoffeeSelectWithKeyboard(String type, String origin) {
         selectWithKeyboard(type, typeSelect);
-
-        waitFor().until(not(attributeToBeNotEmpty(originSelect.getWrappedElement(), "disabled")));
+        originSelect.shouldBe(enabled);
         selectWithKeyboard(origin, originSelect);
 
-        new Actions(driver)
-                .sendKeys(Keys.TAB)
-                .sendKeys(Keys.ENTER)
-                .perform();
+        actions()
+            .sendKeys(Keys.TAB)
+            .sendKeys(Keys.ENTER)
+            .perform();
 
-        return new IndexView(driver);
+        return new IndexView();
     }
 
-    public void selectWithKeyboard(String type, Select select) {
-        while (!type.equals(select.getFirstSelectedOption().getText()))
+    public void selectWithKeyboard(String type, SelenideElement select) {
+        while (!type.equals(select.getSelectedText()))
             select.getWrappedElement().sendKeys(Keys.ARROW_DOWN);
     }
 }

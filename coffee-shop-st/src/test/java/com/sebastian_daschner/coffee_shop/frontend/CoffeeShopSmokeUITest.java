@@ -3,6 +3,7 @@ package com.sebastian_daschner.coffee_shop.frontend;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static com.codeborne.selenide.Condition.text;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CoffeeShopSmokeUITest {
@@ -17,7 +18,7 @@ public class CoffeeShopSmokeUITest {
     @Test
     void index_view_page_header_empty_table() {
         IndexView index = coffeeShop.index();
-        assertThat(index.getPageHeader()).isEqualTo("All coffee orders");
+        index.getPageHeader().shouldHave(text("All coffee orders"));
         assertThat(index.getListedOrders()).isEmpty();
     }
 
