@@ -13,8 +13,8 @@ public class OrderView {
     private final SelenideElement originSelect = $("select[name=origin]");
     private final SelenideElement submitButton = $("button[type=submit]");
 
-    public SelenideElement getPageHeader() {
-        return $("body > h1");
+    public String getPageHeader() {
+        return $("body > h1").text();
     }
 
     public IndexView orderCoffee(String type, String origin) {

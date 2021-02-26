@@ -16,7 +16,7 @@ public class CoffeeShopUI {
 
     private UriBuilder uriBuilder() {
         String host = System.getProperty("coffee-shop.test.host", "localhost");
-        String port = System.getProperty("coffee-shop.test.port", "8080");
+        String port = System.getProperty("coffee-shop.test.port", "8001");
         return UriBuilder.fromUri("http://{host}:{port}/")
                 .resolveTemplate("host", host)
                 .resolveTemplate("port", port);

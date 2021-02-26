@@ -11,8 +11,8 @@ import static java.util.stream.Collectors.toList;
 
 public class IndexView {
 
-    public SelenideElement getPageHeader() {
-        return $("body > h1");
+    public String getPageHeader() {
+        return $("body > h1").text();
     }
 
     public List<Order> getListedOrders() {
