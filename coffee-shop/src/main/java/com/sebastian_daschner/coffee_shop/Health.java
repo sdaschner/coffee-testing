@@ -14,7 +14,7 @@ public class Health implements HealthCheck {
     public HealthCheckResponse call() {
         return HealthCheckResponse.named("coffee-shop")
                 .up()
-                .withData("version", "3")
+                .withData("version", "4")
                 .build();
     }
 
