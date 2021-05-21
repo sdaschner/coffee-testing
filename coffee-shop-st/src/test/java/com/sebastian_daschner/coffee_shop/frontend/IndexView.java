@@ -1,7 +1,5 @@
 package com.sebastian_daschner.coffee_shop.frontend;
 
-import com.codeborne.selenide.SelenideElement;
-
 import java.util.List;
 
 import static com.codeborne.selenide.Condition.text;
@@ -15,6 +13,10 @@ public class IndexView {
         return $("body > h1").text();
     }
 
+    public void assertPageHeader(String header) {
+        $("body > h1").shouldHave(text(header));
+    }
+
     public List<Order> getListedOrders() {
         return $$("body > table tr").stream()
                 .map(el -> el.findAll("td"))
@@ -24,12 +26,7 @@ public class IndexView {
     }
 
     public OrderView followCreateOrderLink() {
-        createOrderLink().click();
+        $$("a").findBy(text("Create")).click();
         return new OrderView();
     }
-
-    private SelenideElement createOrderLink() {
-        return $$("a").findBy(text("Create"));
-    }
-
 }

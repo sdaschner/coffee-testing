@@ -17,7 +17,7 @@ public class CoffeeShopSmokeUITest {
     @Test
     void index_view_page_header_empty_table() {
         IndexView index = coffeeShop.index();
-        assertThat(index.getPageHeader()).isEqualTo("All coffee orders");
+        index.assertPageHeader("All orders");
         assertThat(index.getListedOrders()).isEmpty();
     }
 
