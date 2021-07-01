@@ -4,22 +4,12 @@ import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
-import static com.sebastian_daschner.coffee_shop.orders.entity.Order.FIND_ALL;
-import static com.sebastian_daschner.coffee_shop.orders.entity.Order.FIND_UNFINISHED;
-
 @Entity
 @Table(name = "orders")
-@NamedQueries({
-        @NamedQuery(name = FIND_UNFINISHED, query = "select o from Order o where o.status <> " +
-                "com.sebastian_daschner.coffee_shop.orders.entity.OrderStatus.COLLECTED"),
-        @NamedQuery(name = FIND_ALL, query = "select o from Order o")})
 public class Order {
 
-    public static final String FIND_UNFINISHED = "Order.findUnfinished";
-    public static final String FIND_ALL = "Order.findAll";
-
     @Id
-    private String id;
+    private UUID id;
 
     @Basic(optional = false)
     @Enumerated(EnumType.STRING)
@@ -39,16 +29,16 @@ public class Order {
         Objects.requireNonNull(id);
         Objects.requireNonNull(type);
         Objects.requireNonNull(origin);
-        this.id = id.toString();
+        this.id = id;
         this.type = type;
         this.origin = origin;
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -79,11 +69,11 @@ public class Order {
     @Override
     public String toString() {
         return "Order{" +
-                "id='" + id + '\'' +
-                ", type='" + type + '\'' +
-                ", origin='" + origin + '\'' +
-                ", status=" + status +
-                '}';
+               "id='" + id + '\'' +
+               ", type='" + type + '\'' +
+               ", origin='" + origin + '\'' +
+               ", status=" + status +
+               '}';
     }
 
 }

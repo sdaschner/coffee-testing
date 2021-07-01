@@ -4,8 +4,8 @@ import org.assertj.core.api.AbstractAssert;
 
 public class OrderAssert extends AbstractAssert<OrderAssert, Order> {
 
-    public OrderAssert(Order task) {
-        super(task, OrderAssert.class);
+    public OrderAssert(Order order) {
+        super(order, OrderAssert.class);
     }
 
     public static OrderAssert assertThat(Order actual) {

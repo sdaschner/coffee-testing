@@ -1,7 +1,6 @@
 package com.sebastian_daschner.coffee_shop.backend;
 
 import com.sebastian_daschner.coffee_shop.backend.entity.Order;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -56,7 +55,8 @@ class CreateOrderNaiveTest {
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .get(Order.class);
 
-        Assertions.assertThat(loadedOrder).isEqualToComparingOnlyGivenFields(order, "type", "origin");
+        assertThat(loadedOrder.getType()).isEqualTo(order.getType());
+        assertThat(loadedOrder.getOrigin()).isEqualTo(order.getOrigin());
 
         List<URI> orders = ordersTarget.request(MediaType.APPLICATION_JSON_TYPE)
                 .get(JsonArray.class).getValuesAs(JsonObject.class).stream()

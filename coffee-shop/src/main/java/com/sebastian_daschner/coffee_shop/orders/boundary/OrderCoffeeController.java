@@ -3,9 +3,9 @@ package com.sebastian_daschner.coffee_shop.orders.boundary;
 import com.sebastian_daschner.coffee_shop.orders.entity.CoffeeType;
 import com.sebastian_daschner.coffee_shop.orders.entity.Order;
 import com.sebastian_daschner.coffee_shop.orders.entity.Origin;
+import io.quarkus.qute.Location;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
-import io.quarkus.qute.api.ResourcePath;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -22,7 +22,7 @@ public class OrderCoffeeController {
     @Inject
     CoffeeShop coffeeShop;
 
-    @ResourcePath("order.html")
+    @Location("order.html")
     Template orderTemplate;
 
     @GET

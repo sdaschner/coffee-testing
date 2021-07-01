@@ -1,9 +1,9 @@
 package com.sebastian_daschner.coffee_shop.orders.boundary;
 
 import com.sebastian_daschner.coffee_shop.orders.entity.Order;
+import io.quarkus.qute.Location;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
-import io.quarkus.qute.api.ResourcePath;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -19,7 +19,7 @@ public class IndexController {
     @Inject
     CoffeeShop coffeeShop;
 
-    @ResourcePath("index.html")
+    @Location("index.html")
     Template index;
 
     @GET

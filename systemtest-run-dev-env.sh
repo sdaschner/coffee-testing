@@ -40,7 +40,7 @@ docker run -d --rm \
   tmp-builder
 
 # wait for app startup
-while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:8001/health)" != "200" ]]; do
+while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:8001/q/health)" != "200" ]]; do
   sleep 2;
 done
 

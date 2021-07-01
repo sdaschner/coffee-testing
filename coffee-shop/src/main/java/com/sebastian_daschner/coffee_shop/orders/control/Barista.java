@@ -40,7 +40,7 @@ public class Barista {
 
     private JsonObject buildRequestJson(Order order) {
         return Json.createObjectBuilder()
-                .add("order", order.getId())
+                .add("order", order.getId().toString())
                 .add("type", order.getType().name().toUpperCase())
                 .add("origin", order.getOrigin().getName().toUpperCase())
                 .add("status", order.getStatus().name().toUpperCase())

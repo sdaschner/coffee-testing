@@ -1,9 +1,9 @@
 package com.sebastian_daschner.coffee_shop.backend;
 
 import com.sebastian_daschner.coffee_shop.backend.entity.Order;
+import com.sebastian_daschner.coffee_shop.backend.entity.OrderAssert;
 import com.sebastian_daschner.coffee_shop.backend.systems.BaristaSystem;
 import com.sebastian_daschner.coffee_shop.backend.systems.CoffeeOrderSystem;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,9 +29,9 @@ class CreateOrderTest {
         URI orderUri = coffeeOrderSystem.createOrder(order);
 
         Order loadedOrder = coffeeOrderSystem.getOrder(orderUri);
-        Assertions.assertThat(loadedOrder).isEqualToComparingOnlyGivenFields(order, "type", "origin");
+        OrderAssert.assertThat(loadedOrder).matchesOrderedData(order);
 
-        Assertions.assertThat(coffeeOrderSystem.getOrders()).contains(orderUri);
+        assertThat(coffeeOrderSystem.getOrders()).contains(orderUri);
     }
 
     @Test
@@ -42,15 +42,15 @@ class CreateOrderTest {
         baristaSystem.answerForOrder(orderUri, "PREPARING");
 
         Order loadedOrder = coffeeOrderSystem.getOrder(orderUri);
-        Assertions.assertThat(loadedOrder).isEqualToComparingOnlyGivenFields(order, "type", "origin");
+        OrderAssert.assertThat(loadedOrder).matchesOrderedData(order);
 
         loadedOrder = waitForProcessAndGet(orderUri, "PREPARING");
-        Assertions.assertThat(loadedOrder.getStatus()).isEqualTo("Preparing");
+        assertThat(loadedOrder.getStatus()).isEqualTo("Preparing");
 
         baristaSystem.answerForOrder(orderUri, "FINISHED");
 
         loadedOrder = waitForProcessAndGet(orderUri, "FINISHED");
-        Assertions.assertThat(loadedOrder.getStatus()).isEqualTo("Finished");
+        assertThat(loadedOrder.getStatus()).isEqualTo("Finished");
     }
 
     private Order waitForProcessAndGet(URI orderUri, String requestedStatus) {

@@ -2,6 +2,7 @@ package com.sebastian_daschner.coffee_shop.orders.boundary;
 
 import com.sebastian_daschner.coffee_shop.orders.TestData;
 import com.sebastian_daschner.coffee_shop.orders.control.OrderProcessor;
+import com.sebastian_daschner.coffee_shop.orders.control.OrderRepository;
 import com.sebastian_daschner.coffee_shop.orders.entity.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,8 +12,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,26 +26,25 @@ class CoffeeShopMockitoTest {
     @Captor
     ArgumentCaptor<Order> orderCaptor;
 
-    private EntityManager entityManager;
-    private OrderProcessor orderProcessor;
+    private final OrderRepository orderRepository;
+    private final OrderProcessor orderProcessor;
 
-    CoffeeShopMockitoTest(@Mock EntityManager entityManager, @Mock OrderProcessor orderProcessor) {
-        this.entityManager = entityManager;
+    CoffeeShopMockitoTest(@Mock OrderRepository orderRepository, @Mock OrderProcessor orderProcessor) {
+        this.orderRepository = orderRepository;
         this.orderProcessor = orderProcessor;
     }
 
     @Test
-    void testProcessUnfinishedOrders(@Mock TypedQuery<Order> mockQuery) {
-        when(entityManager.createNamedQuery(Order.FIND_UNFINISHED, Order.class)).thenReturn(mockQuery);
-        List<Order> desiredOrders = TestData.unfinishedOrders();
-        when(mockQuery.getResultList()).thenReturn(desiredOrders);
+    void testProcessUnfinishedOrders() {
+        List<Order> orders = TestData.unfinishedOrders();
+        when(orderRepository.listUnfinishedOrders()).thenReturn(orders);
 
         testObject.processUnfinishedOrders();
 
-        verify(entityManager).createNamedQuery(Order.FIND_UNFINISHED, Order.class);
-        verify(orderProcessor, times(desiredOrders.size())).processOrder(orderCaptor.capture());
+        verify(orderRepository).listUnfinishedOrders();
 
-        assertThat(orderCaptor.getAllValues()).containsExactlyElementsOf(desiredOrders);
+        verify(orderProcessor, times(orders.size())).processOrder(orderCaptor.capture());
+        assertThat(orderCaptor.getAllValues()).containsExactlyElementsOf(orders);
     }
 
 }
