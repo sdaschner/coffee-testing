@@ -34,7 +34,7 @@ public class Dockers {
 
         System.out.println("<<<<<<<<<<<<");
         System.out.println("<<<<<<<<<<<<");
-        System.out.println(image.get());
+        System.out.println(image.getDockerImageName());
         System.out.println("<<<<<<<<<<<<");
         System.out.println("<<<<<<<<<<<<");
 
