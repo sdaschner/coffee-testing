@@ -54,6 +54,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- MicroProfile Config -->
+        <dependency>
+            <groupId>io.smallrye.config</groupId>
+            <artifactId>smallrye-config</artifactId>
+            <version>2.4.3</version>
+        </dependency>
+
         <!--Cucumber, Gherkin-->
         <dependency>
             <groupId>io.cucumber</groupId>

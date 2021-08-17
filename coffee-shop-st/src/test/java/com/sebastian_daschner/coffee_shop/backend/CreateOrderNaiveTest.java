@@ -1,6 +1,8 @@
 package com.sebastian_daschner.coffee_shop.backend;
 
 import com.sebastian_daschner.coffee_shop.backend.entity.Order;
+import org.eclipse.microprofile.config.Config;
+import org.eclipse.microprofile.config.ConfigProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -33,8 +35,9 @@ class CreateOrderNaiveTest {
     }
 
     private URI buildUri() {
-        String host = System.getProperty("coffee-shop.test.host", "localhost");
-        String port = System.getProperty("coffee-shop.test.port", "8001");
+        Config config = ConfigProvider.getConfig();
+        String host = config.getValue("coffee-shop.test.host", String.class);
+        String port = config.getValue("coffee-shop.test.port", String.class);
         return UriBuilder.fromUri("http://{host}:{port}/orders")
                 .build(host, port);
     }
