@@ -44,14 +44,18 @@ public class CoffeeShopDev {
 
         Startables.deepStart(coffeeShop, barista, coffeeShopDb).join();
 
+        String coffeeShopHost = coffeeShop.getHost();
         int coffeeShopPort = coffeeShop.getMappedPort(8080);
+        String baristaHost = barista.getHost();
         int baristaPort = barista.getMappedPort(8080);
 
-        writeDotEnvFile(coffeeShopPort, baristaPort);
+        writeDotEnvFile(coffeeShopHost, coffeeShopPort, baristaHost, baristaPort);
 
-        System.out.println("The coffee-shop URLs is: http://localhost:" + coffeeShopPort + "/index.html");
+        String uri = "http://" + coffeeShopHost + ":" + coffeeShopPort + "/index.html";
+        System.out.println("The coffee-shop URLs is: " + uri);
+
         System.out.println("\nYou can connect to Quarkus remote-dev by executing the following in coffee-shop/:");
-        System.out.println("mvn quarkus:remote-dev -Ddebug=false -Dquarkus.live-reload.url=http://localhost:" + coffeeShopPort + " -Dquarkus.live-reload.password=123 -Dquarkus.package.type=mutable-jar");
+        System.out.println("mvn quarkus:remote-dev -Ddebug=false -Dquarkus.live-reload.url=http://" + coffeeShopHost + ":" + coffeeShopPort + " -Dquarkus.live-reload.password=123 -Dquarkus.package.type=mutable-jar");
         System.out.println("\nContainers started. Press any key or kill process to stop");
         System.in.read();
     }

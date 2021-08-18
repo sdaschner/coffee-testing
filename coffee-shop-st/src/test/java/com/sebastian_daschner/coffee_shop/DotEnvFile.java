@@ -12,14 +12,14 @@ import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 
 public final class DotEnvFile {
 
-    public static void writeDotEnvFile(int coffeeShopPort, int baristaPort) {
+    public static void writeDotEnvFile(String coffeeShopHost, int coffeeShopPort, String baristaHost, int baristaPort) {
         Path path = Paths.get(System.getProperty("user.dir"), ".env");
         System.out.println("Writing port config to " + path);
 
         List<String> lines = List.of(
-                "COFFEE_SHOP_TEST_HOST=localhost",
+                "COFFEE_SHOP_TEST_HOST=" + coffeeShopHost,
                 "COFFEE_SHOP_TEST_PORT=" + coffeeShopPort,
-                "BARISTA_TEST_HOST=localhost",
+                "BARISTA_TEST_HOST=" + baristaHost,
                 "BARISTA_TEST_PORT=" + baristaPort
         );
 
