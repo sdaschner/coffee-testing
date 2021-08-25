@@ -1,12 +1,24 @@
+FROM maven:3.8.2-adoptopenjdk-16-openj9
+
+COPY pom.xml /workspace/
+WORKDIR /workspace/
+
+# mvn dependency Docker cache optimization
+RUN mvn dependency:go-offline package failsafe:integration-test
+
+COPY src /workspace/src/
+
+RUN mvn package -Dquarkus.package.type=mutable-jar
+
 FROM adoptopenjdk/openjdk16-openj9:x86_64-alpine-jre-16.0.1_9_openj9-0.26.0
 RUN apk add curl
 
 ENV QUARKUS_LAUNCH_DEVMODE=true \
     JAVA_ENABLE_DEBUG=true
 
-COPY target/quarkus-app/lib/ /deployments/lib/
-COPY target/quarkus-app/*.jar /deployments/
-COPY target/quarkus-app/quarkus/ /deployments/quarkus/
-COPY target/quarkus-app/app/ /deployments/app/
+COPY --from=0 /workspace/target/quarkus-app/lib/ /deployments/lib/
+COPY --from=0 /workspace/target/quarkus-app/*.jar /deployments/
+COPY --from=0 /workspace/target/quarkus-app/quarkus/ /deployments/quarkus/
+COPY --from=0 /workspace/target/quarkus-app/app/ /deployments/app/
 
 CMD ["java", "-jar", "-Dquarkus.http.host=0.0.0.0", "-Djava.util.logging.manager=org.jboss.logmanager.LogManager", "-Dquarkus.package.type=mutable-jar", "-Dquarkus.live-reload.password=123", "/deployments/quarkus-run.jar"]
