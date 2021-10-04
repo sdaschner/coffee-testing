@@ -3,8 +3,6 @@ package com.sebastian_daschner.coffee_shop.frontend;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 public class CoffeeShopSmokeUITest {
 
     private final CoffeeShopUI coffeeShop = new CoffeeShopUI();
@@ -18,7 +16,6 @@ public class CoffeeShopSmokeUITest {
     void index_view_page_header_empty_table() {
         IndexView index = coffeeShop.index();
         index.assertPageHeader("All coffee orders");
-        assertThat(index.getListedOrders()).isEmpty();
     }
 
 }

@@ -1,9 +1,8 @@
-= Effective Testing &amp; Test Automation
-
-Some projects for my presentations on effective enterprise testing.
+= Development Workflow Example with Quarkus
 
 The example projects contain a _coffee-shop_ application, which uses the _coffee-shop-db_ database, and a _barista_ application.
 
+To run the examples, you need Docker, JDK 16+ and a recent Maven 3 installation.
 
 == Running
 
@@ -85,41 +84,18 @@ You run the system test environment with dev mode by executing:
 
 You can run the system tests like in the description before, and also you can change the sources under `coffee-shop/` and see the changes being reflected in the running coffee-shop application.
 
+=== Executing system tests faster
 
-=== System tests on Kubernetes
-
-In order to run the system tests in Kubernetes &amp; Istio you need to apply the `systemtest` Kubernetes resources: `kubectl apply -f coffee-shop/deployment/systemtest/`.
-The files assume that you have Istio installed on your cluster.
-
-You can point your integration &amp; system tests to the remote environment using the following system variables:
-
-- for the smoke integration tests:
-
-[source,bash]
-----
-cd coffee-shop/
-mvn test-compile failsafe:integration-test failsafe:verify \
-  -Dcoffee-shop.test.host=1.2.3.4 \
-  -Dcoffee-shop.test.port=80
-----
-
-- for the system tests:
+In order to yet speed up the turnaround of the system tests, you can use Quarkus' dev mode to run the (non-Quarkus) system test project.
+This is a bit of a workaround, but works well:
 
 [source,bash]
 ----
 cd coffee-shop-st/
-mvn verify \
-  -Dcoffee-shop.test.host=1.2.3.4 \
-  -Dcoffee-shop.test.port=80 \
-  -Dbarista.test.host=1.2.3.4 \
-  -Dbarista.test.port=80
+
+# runs all tests
+mvn quarkus:dev -Ptest -Dquarkus.test.exclude-pattern=''
+
+# ignores the slower UI tests
+mvn quarkus:dev -Ptest -Dquarkus.test.exclude-pattern='.*UITest'
 ----
-
-
-== Further resources
-
-- https://blog.sebastian-daschner.com/entries/efficient-testing-video-course[Efficient enterprise testing (video course)^]
-- https://blog.sebastian-daschner.com/entries/thoughts-on-efficient-testing[Efficient enterprise testing (article series)^]
-- https://blog.sebastian-daschner.com/entries/tests-that-spark-flow-poem[Tests that spark flow — A poem^]
-
-If you're interested in effective testing with Quarkus, have a look at my next https://www.sebastian-daschner.com/offerings/workshops/effective-testing-quarkus[online workshop^] on July 27th, 2021.
