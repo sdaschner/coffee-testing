@@ -15,7 +15,7 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private CoffeeType type;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     private Origin origin;
 
     @Basic(optional = false)

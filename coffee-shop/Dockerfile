@@ -1,9 +1,6 @@
-FROM adoptopenjdk/openjdk16-openj9:x86_64-alpine-jre-16.0.1_9_openj9-0.26.0
-RUN apk add curl
+FROM payara/server-full:5.2021.7-jdk11
 
-COPY target/quarkus-app/lib/ /deployments/lib/
-COPY target/quarkus-app/*.jar /deployments/
-COPY target/quarkus-app/quarkus/ /deployments/quarkus/
-COPY target/quarkus-app/app/ /deployments/app/
-
-CMD ["java", "-jar", "-Dquarkus.http.host=0.0.0.0", "-Djava.util.logging.manager=org.jboss.logmanager.LogManager", "/deployments/quarkus-run.jar"]
+USER payara
+COPY deployment/payara/postgresql-9.4.1212.jar /opt/payara/appserver/glassfish/domains/domain1/lib
+COPY deployment/payara/domain.xml /opt/payara/appserver/glassfish/domains/domain1/config/
+COPY target/coffee-shop.war /opt/payara/appserver/glassfish/domains/domain1/autodeploy/

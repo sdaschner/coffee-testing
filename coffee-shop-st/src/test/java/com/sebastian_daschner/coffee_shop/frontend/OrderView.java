@@ -4,6 +4,7 @@ import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.Keys;
 
 import static com.codeborne.selenide.Condition.enabled;
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.actions;
 
@@ -13,8 +14,8 @@ public class OrderView {
     private final SelenideElement originSelect = $("select[name=origin]");
     private final SelenideElement submitButton = $("button[type=submit]");
 
-    public String getPageHeader() {
-        return $("body > h1").text();
+    public void assertPageHeader(String header) {
+        $("body > h1").shouldHave(text(header));
     }
 
     public IndexView orderCoffee(String type, String origin) {
@@ -31,9 +32,9 @@ public class OrderView {
         selectWithKeyboard(origin, originSelect);
 
         actions()
-            .sendKeys(Keys.TAB)
-            .sendKeys(Keys.ENTER)
-            .perform();
+                .sendKeys(Keys.TAB)
+                .sendKeys(Keys.ENTER)
+                .perform();
 
         return new IndexView();
     }

@@ -3,11 +3,11 @@ package com.sebastian_daschner.coffee_shop.orders.boundary;
 import com.sebastian_daschner.coffee_shop.orders.entity.CoffeeType;
 import com.sebastian_daschner.coffee_shop.orders.entity.Order;
 import com.sebastian_daschner.coffee_shop.orders.entity.Origin;
-import io.quarkus.qute.Location;
-import io.quarkus.qute.Template;
-import io.quarkus.qute.TemplateInstance;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.mvc.Controller;
+import javax.mvc.Models;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -16,19 +16,21 @@ import java.util.Set;
 import java.util.UUID;
 
 @Path("order.html")
-@Produces(MediaType.TEXT_HTML)
+@Controller
+@ApplicationScoped
 public class OrderCoffeeController {
 
     @Inject
     CoffeeShop coffeeShop;
 
-    @Location("order.html")
-    Template orderTemplate;
+    @Inject
+    Models models;
 
     @GET
-    public TemplateInstance index() {
+    public String index() {
         Set<CoffeeType> types = coffeeShop.getCoffeeTypes();
-        return orderTemplate.data("types", types);
+        models.put("types", types);
+        return "order.jsp";
     }
 
     @POST
@@ -40,10 +42,10 @@ public class OrderCoffeeController {
 
         if (!orderIsValid(order)) {
             Set<CoffeeType> types = coffeeShop.getCoffeeTypes();
-            return Response.ok(orderTemplate
-                    .data("failed", true)
-                    .data("types", types))
-                    .build();
+
+            models.put("failed", true);
+            models.put("types", types);
+            return Response.ok("order.jsp").build();
         }
 
         coffeeShop.createOrder(order);

@@ -1,27 +1,29 @@
-<!DOCTYPE html>
+<%@page contentType="text/html" pageEncoding="utf-8"%><%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Order coffee</title>
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/coffee-shop/style.css">
 </head>
 <body>
 
 <h1>Order coffee</h1>
 
-<p><a href="/index.html">Show all orders</a></p>
+<p><a href="/coffee-shop/coffee/index.html">Show all orders</a></p>
 
-{#if failed}<p class="error">Could not create the order. Please select all values properly.</p>{/if}
+<c:if test="${failed}">
+<p class="error">Could not create the order. Please select all values properly.</p>
+</c:if>
 
-<form action="/order.html" method="post">
+<form action="/coffee-shop/coffee/order.html" method="post">
     <div class="grid">
         <select name="type" required="required">
             <option value="">Select type</option>
-            {#for type in types}
-            <option value="{string:capitalize(type.name)}">{type.description}</option>
-            {/for}
+            <c:forEach var="type" items="${types}">
+            <option value="${type.name()}">${type.description}</option>
+            </c:forEach>
         </select>
         <select name="origin" disabled="disabled" required="required">
             <option value="">Select origin</option>
@@ -30,6 +32,6 @@
     </div>
 </form>
 
-<script src="/form.js"></script>
+<script src="/coffee-shop/form.js"></script>
 </body>
 </html>

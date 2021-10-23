@@ -6,7 +6,6 @@ import com.sebastian_daschner.coffee_shop.orders.control.OriginRepository;
 import com.sebastian_daschner.coffee_shop.orders.entity.CoffeeType;
 import com.sebastian_daschner.coffee_shop.orders.entity.Order;
 import com.sebastian_daschner.coffee_shop.orders.entity.Origin;
-import io.quarkus.scheduler.Scheduled;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -42,7 +41,7 @@ public class CoffeeShop {
     }
 
     public void createOrder(Order order) {
-        orderRepository.persist(order);
+        orderRepository.save(order);
     }
 
     public Order getOrder(UUID id) {
@@ -51,11 +50,6 @@ public class CoffeeShop {
 
     public List<Order> getOrders() {
         return orderRepository.listAll();
-    }
-
-    @Scheduled(every = "2s")
-    public void processUnfinishedOrders() {
-        orderRepository.listUnfinishedOrders().forEach(orderProcessor::processOrder);
     }
 
     public void updateOrder(UUID id, Order order) {

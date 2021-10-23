@@ -18,7 +18,7 @@ public class CoffeeShopTestDouble extends CoffeeShop {
     }
 
     public void verifyCreateOrder(Order order) {
-        verify(orderRepository).persist(order);
+        verify(orderRepository).save(order);
     }
 
     public void verifyProcessUnfinishedOrders(List<Order> orders) {

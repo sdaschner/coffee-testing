@@ -2,7 +2,6 @@ package com.sebastian_daschner.coffee_shop.orders.boundary;
 
 import com.sebastian_daschner.coffee_shop.orders.control.EntityBuilder;
 import com.sebastian_daschner.coffee_shop.orders.entity.CoffeeType;
-import io.quarkus.arc.Unremovable;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -10,7 +9,6 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.ws.rs.GET;
-import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
@@ -19,7 +17,6 @@ import javax.ws.rs.core.UriInfo;
 
 @Produces(MediaType.APPLICATION_JSON)
 @RequestScoped
-@Unremovable // https://github.com/quarkusio/quarkus/issues/5314
 public class OriginsResource {
 
     @Inject

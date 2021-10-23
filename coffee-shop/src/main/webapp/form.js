@@ -10,7 +10,7 @@ function init() {
 }
 
 function updateOrigins(type) {
-    fetch(`${window.location.origin}/types`)
+    fetch(`${window.location.origin}/coffee-shop/coffee/types`)
         .then(res => res.json())
         .then(json => {
             const url = json.filter(t => t.type === type)

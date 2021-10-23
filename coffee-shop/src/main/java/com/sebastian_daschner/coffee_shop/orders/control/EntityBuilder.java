@@ -14,7 +14,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
-import static com.sebastian_daschner.coffee_shop.orders.control.StringExtensions.capitalize;
+import static com.sebastian_daschner.coffee_shop.orders.control.Strings.capitalize;
 
 @ApplicationScoped
 public class EntityBuilder {

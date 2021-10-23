@@ -1,12 +1,9 @@
 package com.sebastian_daschner.coffee_shop.orders.boundary;
 
-import com.sebastian_daschner.coffee_shop.orders.TestData;
 import com.sebastian_daschner.coffee_shop.orders.control.OrderProcessorTestDouble;
 import com.sebastian_daschner.coffee_shop.orders.entity.Order;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 class CoffeeShopUseCaseTest {
 
@@ -23,16 +20,6 @@ class CoffeeShopUseCaseTest {
         Order order = new Order();
         coffeeShop.createOrder(order);
         coffeeShop.verifyCreateOrder(order);
-    }
-
-    @Test
-    void testProcessUnfinishedOrders() {
-        List<Order> orders = TestData.unfinishedOrders();
-
-        coffeeShop.answerForUnfinishedOrders(orders);
-
-        coffeeShop.processUnfinishedOrders();
-        coffeeShop.verifyProcessUnfinishedOrders(orders);
     }
 
 }

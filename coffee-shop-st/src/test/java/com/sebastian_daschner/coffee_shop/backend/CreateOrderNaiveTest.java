@@ -67,6 +67,34 @@ class CreateOrderNaiveTest {
         assertThat(orders).contains(orderUri);
     }
 
+    @Test
+    void createVerifyOrderEthiopia() {
+        Order order = new Order("Espresso", "Ethiopia");
+        JsonObject requestBody = createJson(order);
+
+        Response response = ordersTarget.request().post(Entity.json(requestBody));
+
+        if (response.getStatusInfo().getFamily() != Response.Status.Family.SUCCESSFUL)
+            throw new AssertionError("Status was not successful: " + response.getStatus());
+
+        URI orderUri = response.getLocation();
+
+        Order loadedOrder = client.target(orderUri)
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .get(Order.class);
+
+        assertThat(loadedOrder.getType()).isEqualTo(order.getType());
+        assertThat(loadedOrder.getOrigin()).isEqualTo(order.getOrigin());
+
+        List<URI> orders = ordersTarget.request(MediaType.APPLICATION_JSON_TYPE)
+                .get(JsonArray.class).getValuesAs(JsonObject.class).stream()
+                .map(o -> o.getString("_self"))
+                .map(URI::create)
+                .collect(Collectors.toList());
+
+        assertThat(orders).contains(orderUri);
+    }
+
     JsonObject createJson(Order order) {
         JsonObjectBuilder builder = Json.createObjectBuilder();
 

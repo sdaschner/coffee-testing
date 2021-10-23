@@ -1,31 +1,31 @@
 package com.sebastian_daschner.coffee_shop.orders.boundary;
 
 import com.sebastian_daschner.coffee_shop.orders.entity.Order;
-import io.quarkus.qute.Location;
-import io.quarkus.qute.Template;
-import io.quarkus.qute.TemplateInstance;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.mvc.Controller;
+import javax.mvc.Models;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 @Path("index.html")
-@Produces(MediaType.TEXT_HTML)
+@ApplicationScoped
 public class IndexController {
 
     @Inject
     CoffeeShop coffeeShop;
 
-    @Location("index.html")
-    Template index;
+    @Inject
+    Models models;
 
     @GET
-    public TemplateInstance index() {
+    @Controller
+    public String index() {
         List<Order> orders = coffeeShop.getOrders();
-        return index.data("orders", orders);
+        models.put("orders", orders);
+        return "index.jsp";
     }
 
 }

@@ -18,10 +18,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class CoffeeShopMockitoTest {
+class OrderProcessTimerMockitoTest {
 
     @InjectMocks
-    CoffeeShop testObject;
+    OrderProcessTimer testObject;
 
     @Captor
     ArgumentCaptor<Order> orderCaptor;
@@ -29,7 +29,7 @@ class CoffeeShopMockitoTest {
     private final OrderRepository orderRepository;
     private final OrderProcessor orderProcessor;
 
-    CoffeeShopMockitoTest(@Mock OrderRepository orderRepository, @Mock OrderProcessor orderProcessor) {
+    OrderProcessTimerMockitoTest(@Mock OrderRepository orderRepository, @Mock OrderProcessor orderProcessor) {
         this.orderRepository = orderRepository;
         this.orderProcessor = orderProcessor;
     }
