@@ -31,6 +31,9 @@ public class TypesResource {
 
     @Context
     UriInfo uriInfo;
+    
+    @Inject
+    OriginsResource originsResource;
 
     @GET
     public JsonArray getCoffeeTypes() {
@@ -41,7 +44,7 @@ public class TypesResource {
 
     @Path("{type}/origins")
     public OriginsResource originsResource() {
-        return resourceContext.getResource(OriginsResource.class);
+        return resourceContext.initResource(originsResource);
     }
 
 }
