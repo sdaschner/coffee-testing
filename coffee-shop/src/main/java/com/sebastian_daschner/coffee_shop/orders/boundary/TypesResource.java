@@ -29,6 +29,9 @@ public class TypesResource {
     @Context
     ResourceContext resourceContext;
 
+    @Inject
+    OriginsResource originsResource;
+
     @Context
     UriInfo uriInfo;
 
@@ -41,7 +44,7 @@ public class TypesResource {
 
     @Path("{type}/origins")
     public OriginsResource originsResource() {
-        return resourceContext.getResource(OriginsResource.class);
+        return resourceContext.initResource(originsResource);
     }
 
 }
