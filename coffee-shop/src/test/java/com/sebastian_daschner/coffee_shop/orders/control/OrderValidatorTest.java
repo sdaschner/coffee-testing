@@ -17,6 +17,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
+import static io.qameta.allure.Allure.parameter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -44,6 +45,7 @@ class OrderValidatorTest {
     @AllureId("43")
     @MethodSource("validData")
     void testIsValid(String json) {
+        parameter("json", json);
         JsonObject jsonObject = Json.createReader(new StringReader(json)).readObject();
 
         assertThat(testObject.isValid(jsonObject, context)).isTrue();
@@ -63,6 +65,7 @@ class OrderValidatorTest {
     @AllureId("39")
     @MethodSource("invalidData")
     void testIsInvalid(String json) {
+        parameter("json", json);
         JsonObject jsonObject = Json.createReader(new StringReader(json)).readObject();
 
         assertThat(testObject.isValid(jsonObject, context)).isFalse();
