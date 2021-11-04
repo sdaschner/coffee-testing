@@ -154,6 +154,15 @@
             <version>1.1</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- Allure TestOps -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-junit5</artifactId>
+            <version>2.16.1</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
 

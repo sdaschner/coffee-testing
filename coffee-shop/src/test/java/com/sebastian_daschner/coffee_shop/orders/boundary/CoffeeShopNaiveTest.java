@@ -7,6 +7,7 @@ import com.sebastian_daschner.coffee_shop.orders.entity.CoffeeType;
 import com.sebastian_daschner.coffee_shop.orders.entity.Order;
 import com.sebastian_daschner.coffee_shop.orders.entity.OrderStatus;
 import com.sebastian_daschner.coffee_shop.orders.entity.Origin;
+import io.qameta.allure.AllureId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -44,6 +45,7 @@ class CoffeeShopNaiveTest {
     }
 
     @Test
+    @AllureId("2")
     void testCreateOrder() {
         Order order = new Order();
         coffeeShop.createOrder(order);
@@ -51,6 +53,7 @@ class CoffeeShopNaiveTest {
     }
 
     @Test
+    @AllureId("31")
     void testProcessUnfinishedOrders() {
         List<Order> orders = Arrays.asList(new Order(UUID.randomUUID(), CoffeeType.ESPRESSO, new Origin("Colombia")),
                 new Order(UUID.randomUUID(), CoffeeType.ESPRESSO, new Origin("Ethiopia")));

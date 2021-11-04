@@ -8,6 +8,7 @@ release.properties
 
 *.iml
 .idea/
+allure-results/
 
 *.log
 *.jar

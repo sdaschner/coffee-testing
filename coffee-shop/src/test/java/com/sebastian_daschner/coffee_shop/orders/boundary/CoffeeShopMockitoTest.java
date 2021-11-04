@@ -4,6 +4,7 @@ import com.sebastian_daschner.coffee_shop.orders.TestData;
 import com.sebastian_daschner.coffee_shop.orders.control.OrderProcessor;
 import com.sebastian_daschner.coffee_shop.orders.control.OrderRepository;
 import com.sebastian_daschner.coffee_shop.orders.entity.Order;
+import io.qameta.allure.AllureId;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -35,6 +36,7 @@ class CoffeeShopMockitoTest {
     }
 
     @Test
+    @AllureId("32")
     void testProcessUnfinishedOrders() {
         List<Order> orders = TestData.unfinishedOrders();
         when(orderRepository.listUnfinishedOrders()).thenReturn(orders);
