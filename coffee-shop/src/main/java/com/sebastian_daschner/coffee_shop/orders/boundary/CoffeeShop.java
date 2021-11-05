@@ -41,6 +41,8 @@ public class CoffeeShop {
     }
 
     public void createOrder(Order order) {
+        Origin origin = originRepository.findById(order.getOrigin().getName());
+        order.setOrigin(origin);
         orderRepository.save(order);
     }
 
@@ -53,9 +55,10 @@ public class CoffeeShop {
     }
 
     public void updateOrder(UUID id, Order order) {
+        Origin managedOrigin = originRepository.findById(order.getOrigin().getName());
         Order managedOrder = orderRepository.findById(id);
         managedOrder.setType(order.getType());
-        managedOrder.setOrigin(order.getOrigin());
+        managedOrder.setOrigin(managedOrigin);
     }
 
 }

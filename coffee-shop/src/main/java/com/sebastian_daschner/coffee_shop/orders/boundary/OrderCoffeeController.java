@@ -50,7 +50,7 @@ public class OrderCoffeeController {
 
         coffeeShop.createOrder(order);
 
-        return Response.seeOther(URI.create("/index.html")).build();
+        return Response.seeOther(URI.create("/coffee-shop/coffee/index.html")).build();
     }
 
     private boolean orderIsValid(Order order) {

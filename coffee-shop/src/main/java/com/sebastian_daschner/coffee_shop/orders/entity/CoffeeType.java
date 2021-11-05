@@ -1,5 +1,7 @@
 package com.sebastian_daschner.coffee_shop.orders.entity;
 
+import com.sebastian_daschner.coffee_shop.orders.control.Strings;
+
 import java.util.stream.Stream;
 
 public enum CoffeeType {
@@ -16,6 +18,10 @@ public enum CoffeeType {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getIdentifier() {
+        return Strings.capitalize(name());
     }
 
     public static CoffeeType fromString(String string) {

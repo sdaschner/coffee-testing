@@ -14,17 +14,20 @@ import java.util.stream.Collectors;
 class CoffeeOrderSystem {
 
     private final Client client;
+    private final WebTarget rootTarget;
     private final WebTarget baseTarget;
 
     CoffeeOrderSystem() {
         client = ClientBuilder.newClient();
-        baseTarget = client.target(buildBaseUri());
+        UriBuilder rootUri = rootUri();
+        rootTarget = client.target(rootUri.build());
+        baseTarget = client.target(rootUri.path("coffee-shop/coffee/").build());
     }
 
-    private URI buildBaseUri() {
+    private UriBuilder rootUri() {
         String host = System.getProperty("coffee-shop.test.host", "localhost");
         String port = System.getProperty("coffee-shop.test.port", "8001");
-        return UriBuilder.fromUri("http://{host}:{port}/").build(host, port);
+        return UriBuilder.fromUri("http://" + host + ":" + port + "/");
     }
 
     boolean isSystemUp() {
@@ -38,7 +41,7 @@ class CoffeeOrderSystem {
     }
 
     private JsonObject retrieveHealthStatus() {
-        return baseTarget.path("health")
+        return rootTarget.path("health")
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .get(JsonObject.class);
     }

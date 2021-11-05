@@ -1,9 +1,9 @@
 package com.sebastian_daschner.coffee_shop.orders.control;
 
+import com.sebastian_daschner.coffee_shop.orders.boundary.CoffeeShop;
 import com.sebastian_daschner.coffee_shop.orders.entity.CoffeeType;
 import com.sebastian_daschner.coffee_shop.orders.entity.Origin;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -18,8 +18,8 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-@Disabled
 class OrderValidatorTest {
 
     private OrderValidator testObject;
@@ -28,11 +28,15 @@ class OrderValidatorTest {
     @BeforeEach
     void setUp() {
         testObject = new OrderValidator();
+        testObject.coffeeShop = mock(CoffeeShop.class);
         context = mock(ConstraintValidatorContext.class);
 
         Set<CoffeeType> coffeeTypes = EnumSet.allOf(CoffeeType.class);
         Origin colombia = new Origin("Colombia");
         colombia.getCoffeeTypes().addAll(coffeeTypes);
+
+        when(testObject.coffeeShop.getCoffeeTypes()).thenReturn(coffeeTypes);
+        when(testObject.coffeeShop.getOrigin("Colombia")).thenReturn(colombia);
     }
 
     @ParameterizedTest
@@ -65,7 +69,8 @@ class OrderValidatorTest {
         return List.of(
                 "{\"type\":\"SIPHON\",\"origin\":\"Colombia\"}",
                 "{\"type\":null,\"origin\":\"Colombia\"}",
-                "{\"origin\":\"Colombia\"}");
+                "{\"origin\":\"Colombia\"}",
+                "{\"type\":\"ESPRESSO\",\"origin\":\"Ethiopia\"}");
     }
 
 }

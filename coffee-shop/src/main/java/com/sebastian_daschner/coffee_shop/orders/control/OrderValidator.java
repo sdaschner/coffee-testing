@@ -6,7 +6,8 @@ import com.sebastian_daschner.coffee_shop.orders.entity.Origin;
 import com.sebastian_daschner.coffee_shop.orders.entity.ValidOrder;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import javax.enterprise.inject.Instance;
+import javax.enterprise.inject.spi.CDI;
 import javax.json.JsonObject;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -14,36 +15,34 @@ import javax.validation.ConstraintValidatorContext;
 @ApplicationScoped
 public class OrderValidator implements ConstraintValidator<ValidOrder, JsonObject> {
 
-    @Inject
+    // https://github.com/eclipse-ee4j/beanvalidation-spec/issues/266
     CoffeeShop coffeeShop;
 
     public void initialize(ValidOrder constraint) {
-        // nothing to do
+        Instance<CoffeeShop> instance = CDI.current().select(CoffeeShop.class);
+        if (!instance.isResolvable())
+            throw new RuntimeException("Could not retrieve coffee-shop instance in OrderValidator.class");
+        coffeeShop = instance.get();
     }
 
     public boolean isValid(JsonObject json, ConstraintValidatorContext context) {
 
-        final String type = json.getString("type", null);
-        final String origin = json.getString("origin", null);
+        String type = json.getString("type", null);
+        String origin = json.getString("origin", null);
 
         if (type == null || origin == null)
             return false;
 
-//        CoffeeType coffeeType = CoffeeType.fromString(type);
-        final CoffeeType coffeeType = coffeeShop.getCoffeeTypes().stream()
+        CoffeeType coffeeType = coffeeShop.getCoffeeTypes().stream()
                 .filter(t -> t.name().equalsIgnoreCase(type))
                 .findAny().orElse(null);
 
-        final Origin coffeeOrigin = coffeeShop.getOrigin(origin);
+        Origin coffeeOrigin = coffeeShop.getOrigin(origin);
 
         if (coffeeOrigin == null || coffeeType == null)
             return false;
 
-//        if (origin.isBlank() || coffeeType == null)
-//            return false;
-
         return coffeeOrigin.getCoffeeTypes().contains(coffeeType);
-//        return true;
     }
 
 }

@@ -10,11 +10,13 @@ function init() {
 }
 
 function updateOrigins(type) {
+    console.log('updating origins for ', type);
     fetch(`${window.location.origin}/coffee-shop/coffee/types`)
         .then(res => res.json())
         .then(json => {
             const url = json.filter(t => t.type === type)
                 .map(t => t['_links']['origins']);
+            console.log('url is', url);
             fetch(url)
                 .then(res => res.json())
                 .then(json => {

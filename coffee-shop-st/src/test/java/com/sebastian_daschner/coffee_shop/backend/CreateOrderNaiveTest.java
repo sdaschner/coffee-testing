@@ -35,7 +35,7 @@ class CreateOrderNaiveTest {
     private URI buildUri() {
         String host = System.getProperty("coffee-shop.test.host", "localhost");
         String port = System.getProperty("coffee-shop.test.port", "8001");
-        return UriBuilder.fromUri("http://{host}:{port}/orders")
+        return UriBuilder.fromUri("http://{host}:{port}/coffee-shop/coffee/orders")
                 .build(host, port);
     }
 

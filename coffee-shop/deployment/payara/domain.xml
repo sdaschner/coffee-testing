@@ -43,7 +43,7 @@
     <connector-resource pool-name="jms/__defaultConnectionFactory-Connection-Pool" object-type="system-all-req" jndi-name="jms/__defaultConnectionFactory"></connector-resource>
     <context-service object-type="system-all" jndi-name="concurrent/__defaultContextService"></context-service>
     <managed-thread-factory object-type="system-all" jndi-name="concurrent/__defaultManagedThreadFactory"></managed-thread-factory>
-    <jdbc-connection-pool datasource-classname="org.postgresql.ds.PGSimpleDataSource" name="Postgres" res-type="javax.sql.DataSource">
+    <jdbc-connection-pool log-jdbc-calls="true" datasource-classname="org.postgresql.ds.PGSimpleDataSource" name="Postgres" res-type="javax.sql.DataSource">
       <property name="DatabaseName" value="postgres"></property>
       <property name="PortNumber" value="5432"></property>
       <property name="User" value="postgres"></property>
@@ -142,7 +142,9 @@
       </web-container>
       <microprofile-openapi-configuration></microprofile-openapi-configuration>
       <ejb-container>
-        <ejb-timer-service></ejb-timer-service>
+        <ejb-timer-service>
+          <property name="reschedule-failed-timer" value="true"></property>
+        </ejb-timer-service>
       </ejb-container>
       <rest-config></rest-config>
       <environment-warning-configuration></environment-warning-configuration>
@@ -364,7 +366,9 @@
         </session-config>
       </web-container>
       <ejb-container>
-        <ejb-timer-service></ejb-timer-service>
+        <ejb-timer-service>
+          <property name="reschedule-failed-timer" value="true"></property>
+        </ejb-timer-service>
       </ejb-container>
       <mdb-container></mdb-container>
       <jms-service addresslist-behavior="priority" default-jms-host="default_JMS_host" type="EMBEDDED">

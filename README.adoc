@@ -1,7 +1,5 @@
 = Effective Testing &amp; Test Automation
 
-Some projects for my presentations on effective enterprise testing.
-
 The example projects contain a _coffee-shop_ application, which uses the _coffee-shop-db_ database, and a _barista_ application.
 
 
@@ -70,56 +68,3 @@ mvn verify
 ----
 
 INFO: To stop and clean up the system test containers again, run: `docker stop coffee-shop barista coffee-shop-db`
-
-
-=== System tests with Quarkus dev mode
-
-The system test environment with Docker containers also works with the Quarkus `remote-dev` mode where we can see our code changes immediately being reflected in the running `coffee-shop` application.
-
-You run the system test environment with dev mode by executing:
-
-[source,bash]
-----
-./systemtest-run-dev-env.sh
-----
-
-You can run the system tests like in the description before, and also you can change the sources under `coffee-shop/` and see the changes being reflected in the running coffee-shop application.
-
-
-=== System tests on Kubernetes
-
-In order to run the system tests in Kubernetes &amp; Istio you need to apply the `systemtest` Kubernetes resources: `kubectl apply -f coffee-shop/deployment/systemtest/`.
-The files assume that you have Istio installed on your cluster.
-
-You can point your integration &amp; system tests to the remote environment using the following system variables:
-
-- for the smoke integration tests:
-
-[source,bash]
-----
-cd coffee-shop/
-mvn test-compile failsafe:integration-test failsafe:verify \
-  -Dcoffee-shop.test.host=1.2.3.4 \
-  -Dcoffee-shop.test.port=80
-----
-
-- for the system tests:
-
-[source,bash]
-----
-cd coffee-shop-st/
-mvn verify \
-  -Dcoffee-shop.test.host=1.2.3.4 \
-  -Dcoffee-shop.test.port=80 \
-  -Dbarista.test.host=1.2.3.4 \
-  -Dbarista.test.port=80
-----
-
-
-== Further resources
-
-- https://blog.sebastian-daschner.com/entries/efficient-testing-video-course[Efficient enterprise testing (video course)^]
-- https://blog.sebastian-daschner.com/entries/thoughts-on-efficient-testing[Efficient enterprise testing (article series)^]
-- https://blog.sebastian-daschner.com/entries/tests-that-spark-flow-poem[Tests that spark flow — A poem^]
-
-If you're interested in effective testing with Quarkus, have a look at my next https://www.sebastian-daschner.com/offerings/workshops/effective-testing-quarkus[online workshop^] on July 27th, 2021.

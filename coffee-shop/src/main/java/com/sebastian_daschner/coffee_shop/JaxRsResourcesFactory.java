@@ -9,6 +9,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.Provider;
 
+// JAX-RS sub resource with injection fails in Payara https://github.com/payara/Payara/issues/5467
 @Provider
 @RequestScoped
 public class JaxRsResourcesFactory implements ClientRequestFilter {

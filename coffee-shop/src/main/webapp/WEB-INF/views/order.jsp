@@ -22,7 +22,7 @@
         <select name="type" required="required">
             <option value="">Select type</option>
             <c:forEach var="type" items="${types}">
-            <option value="${type.name()}">${type.description}</option>
+            <option value="${type.identifier}">${type.description}</option>
             </c:forEach>
         </select>
         <select name="origin" disabled="disabled" required="required">
