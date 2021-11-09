@@ -1,5 +1,6 @@
 package com.sebastian_daschner.coffee_shop.it;
 
+import io.qameta.allure.AllureId;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,16 +22,19 @@ class CreateOrderQuarkusSmokeIT {
     }
 
     @Test
+    @AllureId("51")
     void testIsSystemUp() {
         assertThat(coffeeOrderSystem.isSystemUp()).isTrue();
     }
 
     @Test
+    @AllureId("48")
     void testGetTypes() {
         assertThat(coffeeOrderSystem.getTypes()).containsExactlyInAnyOrder("Espresso", "Pour_over", "Latte");
     }
 
     @Test
+    @AllureId("46")
     void testGetTypeOrigins() {
         assertThat(coffeeOrderSystem.getOrigins("Espresso")).containsExactlyInAnyOrder("Colombia", "Ethiopia");
     }
