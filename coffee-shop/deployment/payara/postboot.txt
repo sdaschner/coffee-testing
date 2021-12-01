@@ -1,0 +1,12 @@
+add-library /opt/payara/config/postgresql-42.2.9.jar
+
+create-jdbc-connection-pool --datasourceClassname=org.postgresql.ds.PGSimpleDataSource --resType=javax.sql.DataSource postgres-pool
+
+set resources.jdbc-connection-pool.postgres-pool.property.serverName=coffee-shop-db
+set resources.jdbc-connection-pool.postgres-pool.property.portNumber=5432
+set resources.jdbc-connection-pool.postgres-pool.property.databaseName=postgres
+set resources.jdbc-connection-pool.postgres-pool.property.password=postgres
+set resources.jdbc-connection-pool.postgres-pool.property.user=postgres
+
+create-jdbc-resource --enabled=true --poolName=postgres-pool --target=domain jdbc/local-postgres
+create-resource-ref --enabled=true --target=server jdbc/local-postgres

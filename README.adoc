@@ -2,6 +2,9 @@
 
 The example projects contain a _coffee-shop_ application, which uses the _coffee-shop-db_ database, and a _barista_ application.
 
+== Preparation
+
+To build the Docker images from scratch, you need to add the https://repo1.maven.org/maven2/org/postgresql/postgresql/42.2.9/postgresql-42.2.9.jar[Postgres Driver^] to the `coffee-shop/deployment/payara/` directory.
 
 == Running
 
