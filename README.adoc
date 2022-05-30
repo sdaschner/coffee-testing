@@ -121,5 +121,3 @@ mvn verify \
 - https://blog.sebastian-daschner.com/entries/efficient-testing-video-course[Efficient enterprise testing (video course)^]
 - https://blog.sebastian-daschner.com/entries/thoughts-on-efficient-testing[Efficient enterprise testing (article series)^]
 - https://blog.sebastian-daschner.com/entries/tests-that-spark-flow-poem[Tests that spark flow — A poem^]
-
-If you're interested in effective testing with Quarkus, have a look at my next https://www.sebastian-daschner.com/offerings/workshops/effective-testing-quarkus[online workshop^] on July 27th, 2021.

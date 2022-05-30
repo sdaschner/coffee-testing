@@ -13,7 +13,7 @@
 
 <p><a href="/index.html">Show all orders</a></p>
 
-{#if failed}<p class="error">Could not create the order. Please select all values properly.</p>{/if}
+{#if failed??}<p class="error">Could not create the order. Please select all values properly.</p>{/if}
 
 <form action="/order.html" method="post">
     <div class="grid">
