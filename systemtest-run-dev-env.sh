@@ -30,18 +30,22 @@ docker run -d --rm \
 
 # coffee-shop
 mvn clean package -Dquarkus.package.type=mutable-jar
-docker build -f Dockerfile.dev -t tmp-builder .
+docker build -t coffee-shop:tmp .
 
-docker run -d --rm \
+docker run -d \
   --name coffee-shop \
   --network dkrnet \
+  -e QUARKUS_LAUNCH_DEVMODE=true \
   -p 8001:8080 \
   -p 5005:5005 \
-  tmp-builder
+  coffee-shop:tmp \
+  java -jar \
+  "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005" \
+  -Dquarkus.live-reload.password=123 \
+  -Dquarkus.http.host=0.0.0.0 \
+  /deployments/quarkus-run.jar
 
 # wait for app startup
-while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:8001/q/health)" != "200" ]]; do
-  sleep 2;
-done
+wget --quiet --tries=30 --waitretry=2 --retry-connrefused -O /dev/null http://localhost:8001/q/health
 
 mvn quarkus:remote-dev -Ddebug=false -Dquarkus.live-reload.url=http://localhost:8001 -Dquarkus.live-reload.password=123 -Dquarkus.package.type=mutable-jar
