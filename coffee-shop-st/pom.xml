@@ -125,15 +125,25 @@
         <profile>
             <id>test</id>
             <properties>
-                <quarkus.version>2.9.2.Final</quarkus.version>
+                <quarkus.version>2.15.2.Final</quarkus.version>
                 <debug>false</debug>
                 <quarkus.native.builder-image>ignored</quarkus.native.builder-image>
             </properties>
+            <dependencyManagement>
+                <dependencies>
+                    <dependency>
+                        <groupId>io.quarkus</groupId>
+                        <artifactId>quarkus-bom</artifactId>
+                        <version>${quarkus.version}</version>
+                        <type>pom</type>
+                        <scope>import</scope>
+                    </dependency>
+                </dependencies>
+            </dependencyManagement>
             <dependencies>
                 <dependency>
                     <groupId>io.quarkus</groupId>
                     <artifactId>quarkus-core</artifactId>
-                    <version>${quarkus.version}</version>
                 </dependency>
             </dependencies>
             <build>
