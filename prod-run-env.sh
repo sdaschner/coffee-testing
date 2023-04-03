@@ -24,6 +24,11 @@ until docker exec coffee-shop-db pg_isready -h localhost > /dev/null; do
   sleep 0.5
 done;
 
+echo 'creating schema'
+docker exec coffee-shop-db psql -U postgres -f /scripts/schema.sql
+echo 'loading data into database'
+docker exec coffee-shop-db psql -U postgres -f /scripts/load-data.sql
+
 echo 'starting coffee-shop'
 docker run -d --rm \
   --name coffee-shop \
@@ -34,7 +39,3 @@ docker run -d --rm \
 until [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:8001/q/health)" == "200" ]]; do
   sleep 0.5
 done;
-echo 'all containers started'
-
-#echo 'loading data into database'
-#docker exec coffee-shop-db psql -U postgres -f /scripts/load-data.sql
