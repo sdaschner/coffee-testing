@@ -8,9 +8,9 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+import jakarta.validation.ConstraintValidatorContext;
 import java.util.List;
 import java.util.Set;
 

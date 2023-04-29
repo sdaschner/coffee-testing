@@ -1,6 +1,6 @@
 package com.sebastian_daschner.barista;
 
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class OrderStatusProcessor {

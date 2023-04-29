@@ -1,6 +1,6 @@
 package com.sebastian_daschner.coffee_shop.orders.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.EnumSet;
 import java.util.Set;
 

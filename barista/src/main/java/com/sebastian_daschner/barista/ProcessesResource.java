@@ -1,10 +1,10 @@
 package com.sebastian_daschner.barista;
 
-import javax.inject.Inject;
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import jakarta.inject.Inject;
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
 
 @Path("processes")
 public class ProcessesResource {

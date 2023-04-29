@@ -7,9 +7,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+import jakarta.validation.ConstraintValidatorContext;
 import java.io.StringReader;
 import java.util.Collection;
 import java.util.EnumSet;
