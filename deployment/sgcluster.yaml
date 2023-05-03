@@ -1,0 +1,16 @@
+apiVersion: stackgres.io/v1
+kind: SGCluster
+metadata:
+  name: cluster
+spec:
+  instances: 2
+  postgres:
+    version: '15'
+  pods:
+    persistentVolume:
+      size: '5Gi'
+#  managedSql:
+#    scripts:
+#    - sgScript: coffee-shop-script
+  prometheusAutobind: true
+---

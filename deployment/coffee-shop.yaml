@@ -7,6 +7,7 @@ spec:
     app: coffee-shop
   ports:
   - port: 8080
+  type: NodePort
 ---
 
 kind: Deployment
@@ -18,46 +19,38 @@ spec:
   selector:
     matchLabels:
       app: coffee-shop
-      version: v1
   template:
     metadata:
       labels:
         app: coffee-shop
-        version: v1
     spec:
       containers:
       - name: coffee-shop
-        image: sdaschner/coffee-shop:quarkus-testing-1
+        image: sdaschner/coffee-shop:quarkus-testing-2
         imagePullPolicy: Always
+#        env:
+#          - name: QUARKUS_DATASOURCE_JDBC_URL
+#            value: 'jdbc:postgresql://cluster:5432/postgres'
+#          - name: QUARKUS_DATASOURCE_PASSWORD
+#            valueFrom:
+#              secretKeyRef:
+#                key: superuser-password
+#                name: cluster
         readinessProbe:
           httpGet:
-            path: /
+            path: /q/health
             port: 8080
       restartPolicy: Always
 ---
 
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
+kind: Ingress
+apiVersion: networking.k8s.io/v1
 metadata:
   name: coffee-shop
 spec:
-  hosts:
-  - coffee-shop
-  http:
-  - route:
-    - destination:
-        host: coffee-shop
-        subset: v1
----
-
-apiVersion: networking.istio.io/v1alpha3
-kind: DestinationRule
-metadata:
-  name: coffee-shop
-spec:
-  host: coffee-shop
-  subsets:
-  - name: v1
-    labels:
-      version: v1
+  defaultBackend:
+    service:
+      name: coffee-shop
+      port:
+        number: 8080
 ---
