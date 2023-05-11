@@ -28,14 +28,14 @@ spec:
       - name: coffee-shop
         image: sdaschner/coffee-shop:quarkus-testing-2
         imagePullPolicy: Always
-#        env:
-#          - name: QUARKUS_DATASOURCE_JDBC_URL
-#            value: 'jdbc:postgresql://cluster:5432/postgres'
-#          - name: QUARKUS_DATASOURCE_PASSWORD
-#            valueFrom:
-#              secretKeyRef:
-#                key: superuser-password
-#                name: cluster
+        env:
+          - name: QUARKUS_DATASOURCE_JDBC_URL
+            value: 'jdbc:postgresql://coffee-shop-db:5432/postgres'
+          - name: QUARKUS_DATASOURCE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: superuser-password
+                name: coffee-shop-db
         readinessProbe:
           httpGet:
             path: /q/health
