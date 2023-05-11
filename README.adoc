@@ -1,123 +1,72 @@
 = Effective Testing &amp; Test Automation
 
-Some projects for my presentations on effective enterprise testing.
-
-The example projects contain a _coffee-shop_ application, which uses the _coffee-shop-db_ database, and a _barista_ application.
+_This branch contains the StackGres examples_
 
 
-== Running
+== Kubernetes Installation
 
-You run the environment, containing the _coffee-shop_, _barista_ applications and the _coffee-shop-db_ using Docker containers.
+You'll need `kubectl`, `helm` &amp; `jq` installed.
 
-In order to run the Docker containers locally, you need to create a Docker network first: + 
-`docker network create --subnet=192.168.42.0/24 dkrnet`
+=== StackGres Installation
 
-Then you can build the _coffee-shop_ project and run the environment as follows:
+Create a cluster with at least 2 nodes.
+The examples have been tested on GKE.
 
-[source,bash]
 ----
-./local-build.sh
-./local-run-env.sh
-----
+# install the Prometheus Helm chart
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo add stable https://charts.helm.sh/stable
+helm repo update
+helm install --create-namespace --namespace monitoring \
+  --set grafana.enabled=true \
+  prometheus prometheus-community/kube-prometheus-stack
 
-You can access the _coffee-shop_ application using HTTP, after the applications have been started:
-
-[source,bash]
-----
-curl localhost:8001/
-curl localhost:8001/orders
-----
-
-You create new coffee orders by POST-ing the JSON representation of a new order:
-
-[source,bash]
-----
-curl localhost:8001/orders -i \
-  -XPOST \
-  -H 'Content-Type: application/json' \
-  -d '{"type":"Espresso","origin":"Colombia"}'
+# install the StackGres operator
+helm install --create-namespace --namespace stackgres stackgres-operator \
+    --set grafana.autoEmbed=true \
+    --set-string grafana.webHost=prometheus-grafana.monitoring \
+    --set-string grafana.secretNamespace=monitoring \
+    --set-string grafana.secretName=prometheus-grafana \
+    --set-string grafana.secretUserKey=admin-user \
+    --set-string grafana.secretPasswordKey=admin-password \
+    stackgres-charts/stackgres-operator
 ----
 
-INFO: To stop and clean up the containers again, run: `docker stop coffee-shop barista coffee-shop-db`
+=== Cluster Creation
 
-
-== Running the tests
-
-You run the non-integration tests by executing `mvn test`, or `mvn package` (any goal that executes Maven's `test` phase).
-
-You run the integration tests by executing `mvn test-compile failsafe:integration-test failsafe:verify`.
-
-You can run the systems tests either in a Kubernetes environment or using plain Docker containers.
-
-
-=== System tests on local Docker containers
-
-You run the system test environment by executing:
-
-[source,bash]
 ----
-./systemtest-run-env.sh
+# create a StackGres Postgres cluster
+kubectl apply -f deployment/sgscript.yaml
+kubectl apply -f deployment/sgcluster.yaml
+
+# wait for start up
 ----
 
-This starts up the _coffee-shop_ application, the _coffee-shop-db_ database, and a _barista_ mock server.
+=== Application Deployment
 
-The system tests contained in `coffee-shop-st/` will run against that deployed environment:
-
-[source,bash]
 ----
-cd coffee-shop-st/
-mvn verify
+# create the coffee-shop & barista app
+kubectl apply -f deployment/barista.yaml
+kubectl apply -f deployment/coffee-shop.yaml
 ----
 
-INFO: To stop and clean up the system test containers again, run: `docker stop coffee-shop barista coffee-shop-db`
+=== Testing
 
+You can access your application via the IP address that has been generated for your ingress:
 
-=== System tests with Quarkus dev mode
-
-The system test environment with Docker containers also works with the Quarkus `remote-dev` mode where we can see our code changes immediately being reflected in the running `coffee-shop` application.
-
-You run the system test environment with dev mode by executing:
-
-[source,bash]
 ----
-./systemtest-run-dev-env.sh
+kubectl get ingresses
 ----
 
-You can run the system tests like in the description before, and also you can change the sources under `coffee-shop/` and see the changes being reflected in the running coffee-shop application.
+List coffee orders:
 
-
-=== System tests on Kubernetes
-
-In order to run the system tests in Kubernetes &amp; Istio you need to apply the `systemtest` Kubernetes resources: `kubectl apply -f coffee-shop/deployment/systemtest/`.
-The files assume that you have Istio installed on your cluster.
-
-You can point your integration &amp; system tests to the remote environment using the following system variables:
-
-- for the smoke integration tests:
-
-[source,bash]
 ----
-cd coffee-shop/
-mvn test-compile failsafe:integration-test failsafe:verify \
-  -Dcoffee-shop.test.host=1.2.3.4 \
-  -Dcoffee-shop.test.port=80
+curl http://<IP>/orders | jq .
 ----
 
-- for the system tests:
+Create a coffee order:
 
-[source,bash]
 ----
-cd coffee-shop-st/
-mvn verify \
-  -Dcoffee-shop.test.host=1.2.3.4 \
-  -Dcoffee-shop.test.port=80 \
-  -Dbarista.test.host=1.2.3.4 \
-  -Dbarista.test.port=80
+curl http://<IP>/orders -i -XPOST -H 'Content-Type: application/json' -d '{"type":"Espresso","origin":"Colombia"}'
+curl http://<IP>/orders | jq .
 ----
-
-
-== Further resources
-
-- https://blog.sebastian-daschner.com/entries/efficient-testing-video-course[Efficient enterprise testing (video course)^]
-- https://blog.sebastian-daschner.com/entries/thoughts-on-efficient-testing[Efficient enterprise testing (article series)^]
-- https://blog.sebastian-daschner.com/entries/tests-that-spark-flow-poem[Tests that spark flow — A poem^]
