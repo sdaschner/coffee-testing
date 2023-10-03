@@ -2,15 +2,5 @@
 
 
 
-                   user
-                     \
-                      ┘
-               .──.    ┌───────────┐
-               │DB│<-->│coffee-shop│
-               └──┘    └───────────┘
-                           \ async
-                            \
-                             ┘
-                          ┌─────────┐
-                          │ barista │
-                          └─────────┘
+
+        In K8s: "Stateless is easy, databases are hard"

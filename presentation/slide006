@@ -2,16 +2,16 @@
 
 
 
-                         system test
-                              |       
-                              v   
-                .──.    ┌───────────┐
-                │DB│<-->│coffee-shop│
-                └──┘    └───────────┘
-                              |
-                              |
-                              v
-                         ┌─────────┐
-                         │ barista │
-                         │ (mock)  │
-                         └─────────┘
+
+            StackGres Features
+
+            • Vanilla PostgreSQL, full control
+            • Tuned by Default
+            • CRDs, GitOps ready
+            • Managed Backups
+            • Fully-Featured Web Console
+            • Observability
+            • High Availability, Failover
+            • Distributed Logs
+            • Connection Pooling
+            • Postgres Extensions

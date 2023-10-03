@@ -2,9 +2,5 @@
 
 
 
-                   user
-                     \
-                      ┘
-               .──.    ┌───────────┐
-               │DB│<-->│coffee-shop│
-               └──┘    └───────────┘
+
+        "Code is easy, state is hard" - Edson Yanaga

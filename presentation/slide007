@@ -1,19 +1,13 @@
 
 
 
-                                
-                         system test ---.
-                              |         |
-                              v         |
-                .──.    ┌───────────┐   |
-                │DB│<-->│coffee-shop│   | control/verify
-                └──┘    └───────────┘   |
-                              |         |
-                              |         |
-                              v         |
-                         ┌─────────┐    |
-                         │ barista │    |
-                         │ (mock)  │<---’
-                         └─────────┘
 
 
+            Thank You For Your Attention!
+
+            • github.com/sdaschner/coffee-testing/tree/stackgres-demo
+            • stackgres.io
+
+            • daschner.dev
+            • twitter.com/@DaschnerS
+            • youtube.com/@SebastianDaschnerIT
